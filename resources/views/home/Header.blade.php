@@ -27,6 +27,7 @@
         </div>
         <div class="social-links d-none d-md-flex align-items-center">
             <a class="fw-semibold" href="https://unimal.ac.id/" target="_black">Universitas Malikussaleh</a>
+            <a class="fw-semibold" href="https://feb.unimal.ac.id/" target="_black">Fakultas Ekonomi</a>
         </div>
     </div>
 </section>
@@ -49,7 +50,6 @@
                         <li><a href="{{ url('/blog-posts') }}">Berita</a></li>
                         <li><a href="{{ url('/sejarah-pmim') }}">Sejarah PMIM</a></li>
                         <li><a href="{{ url('/produks') }}">Sarana dan prasarana</a></li>
-                        <li><a href="{{ url('akreditas-ppimfe') }}">Akreditasi</a></li>
                         <li><a href="{{ url('/visi-misi-tujuan') }}">Visi, Misi, Tujuan</a></li>
                         <li><a href="{{ url('/profil-lulusan') }}">Profil Lulusan</a></li>
                         <li><a href="{{ url('/kerja-sama-aliansi') }}">Kerja Sama & Aliansi</a></li>
@@ -62,12 +62,12 @@
                 <li class="dropdown"><a href="#"><span>Akademik</span> <i
                             class="bi bi-chevron-down dropdown-indicator"></i></a>
                     <ul>
-                        <li><a href="https://elearning.unimal.ac.id/login/index.php" target="_balck">E-Learning</a></li>
-                        <li><a href="/kurikulum">Struktur Kurikulum</a></li>
-                        <li><a href="/kelender-akademik">Kalender Akademik</a></li>
-                        <li><a href="/panduanAkademik">Panduan Akademik</a></li>
+                        <li><a href="https://elearning.unimal.ac.id/" target="_balck">E-Learning</a></li>
                         <li><a href="http://portal.unimal.ac.id/" target="_black">Portal Akademik</a></li>
-                        <li><a href="/akreditas">Akreditasi</a></li>
+                        <li><a href="{{ url('/akreditas-ppimfe') }}">Akreditasi</a></li>
+                        <li><a href="{{ url('/truktur-kurikulum') }}">Struktur Kurikulum</a></li>
+                        <li><a href="{{ url('/kelender-akademik') }}">Kalender Akademik</a></li>
+                        <li><a href="{{ url('/panduan-akademik') }}">Panduan Akademik</a></li>
                         <li><a href="/galery">Galeri</a></li>
                         <li><a href="/download">Download</a></li>
                     </ul>
@@ -85,10 +85,9 @@
                 <li class="dropdown"><a href="#"><span>Download</span> <i
                             class="bi bi-chevron-down dropdown-indicator"></i></a>
                     <ul class="dropdown-active">
+                        <li><a href="/adimistrasi">Dokumen Akreditasi`</a></li>
                         <li><a href="/adimistrasi">Dokumen Administrasi</a></li>
                         <li><a href="/pengabdian">Dokumen Penjaminan <br> Mutu</a></li>
-                        <li><a href="/panduan">Panduan</a></li>
-                        <li><a href="/penpen">Dokumen Penelitian &amp; <br> Pengabdian</a></li><a href="/penpen">
                         </a>
                     </ul>
                 </li>

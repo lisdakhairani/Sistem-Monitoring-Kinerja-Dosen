@@ -1,12 +1,12 @@
-<footer id="footer" class="footer">
+<footer id="footer" class="footer mt-2">
 
     <div class="container">
         <div class="row gy-4">
             <div class="col-lg-5 col-md-12 footer-info">
                 <a href="{{ url('/') }}" class="logo d-flex align-items-center">
-                    <span>ppimfe</span>
+                    <span>PMIM</span>
                 </a>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, in?</p>
+                <p>Program Magister Ilmu Manajemen</p>
                 <div class="social-links d-flex mt-4">
                     <a href="#" class="twitter"><i class="bi bi-tiktok"></i></a>
                     <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>

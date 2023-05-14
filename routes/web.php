@@ -17,6 +17,13 @@ use App\Models\VisiMisi as UserVisiMisi;
 use App\Models\Kerjasama as UserKerjasama;
 use App\Models\Rencanastrategi as UserRencanastrategi;
 use App\Models\Organis as UserOrganis;
+use App\Models\Staf as UserStaf;
+use App\Models\Daftardosen as UserDaftardosen;
+use App\Models\Semestersatu as UserSemestersatu;
+use App\Models\Semesterdua as UserSemesterdua;
+use App\Models\Semestertiga as UserSemestertiga;
+use App\Models\Kelender as UserKelender;
+use App\Models\Panduanakademik as UserPanduanakademik;
 
 // Admin
 use App\Http\Controllers\SofdeletedController;
@@ -25,16 +32,24 @@ use App\Http\Controllers\UserController as adminUserController;
 use App\Http\Controllers\adminCategoryController as adminCategoryController;
 use App\Http\Controllers\AkreditasController as adminAkreditasController;
 use App\Http\Controllers\CategoryProdukController as adminCategoryProdukController;
+use App\Http\Controllers\DaftardosenController as adminDaftardosenController;
 use App\Http\Controllers\DashboardPostController as adminDashboardPostController;
+use App\Http\Controllers\KelenderController as adminKelenderController;
 use App\Http\Controllers\KerjasamaController as adminKerjasamaController;
 use App\Http\Controllers\OrganisController as adminOrganisController;
+use App\Http\Controllers\PanduanakademikController as adminPanduanakademikController;
 use App\Http\Controllers\PemakaianController as adminPemakaianController;
 use App\Http\Controllers\ProducController as adminProducController;
 use App\Http\Controllers\ProdukSofdeletedController as adminProdukSofdeletedController;
 use App\Http\Controllers\ProfillulusController as adminProfillulusController;
 use App\Http\Controllers\RencanastrategiController as adminRencanastrategiController;
 use App\Http\Controllers\SejarahpmimController as adminSejarahpmimController;
+use App\Http\Controllers\SemesterduaController as adminSemesterduaController;
+use App\Http\Controllers\SemestersatuController as adminSemestersatuController;
+use App\Http\Controllers\SemestertigaController as adminSemestertigaController;
+use App\Http\Controllers\StafController as adminStafController;
 use App\Http\Controllers\VisimisiController as adminVisimisiController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -66,7 +81,7 @@ Route::get('/contact', function () {
 Route::get('/sejarah-pmim', [UserSejarahpmimController::class, 'index']);
 // Akreditasi
 Route::get('/akreditas-ppimfe', function () {
-    $akreditas = UserAkreditas::all();
+    $akreditas = UserAkreditas::orderBy('created_at', 'desc')->get();
     return View('home.profil.akreditasi', compact('akreditas'));
 });
 // visi, misi, tujuan
@@ -74,38 +89,59 @@ Route::get('/visi-misi-tujuan', function () {
     $visimisi = UserVisiMisi::all();
     return View('home.profil.visi-misi', compact('visimisi'));
 });
+
 // profil lusan
 Route::get('/profil-lulusan', function () {
     $profillulus = UserProfillulus::all();
     return view('home.profil.profillulusan', compact('profillulus'));
 });
-// Kerja sama
 Route::get('/kerja-sama-aliansi', function () {
-    $kerjasama = UserKerjasama::all();
+    $kerjasama = UserKerjasama::orderBy('created_at', 'desc')->get();
     return view('home.profil.kerjasama', compact('kerjasama'));
 });
-// Rencana Strategi
 Route::get('/rencana-strategi', function () {
-    $rencana = UserRencanastrategi::all();
+    $rencana = UserRencanastrategi::orderBy('created_at', 'desc')->get();
     return view('home.profil.rencanastrategi', compact('rencana'));
 });
-// Rencana Strategi
-Route::get('/rencana-strategi', function () {
-    $rencana = UserRencanastrategi::all();
-    return view('home.profil.rencanastrategi', compact('rencana'));
-});
-// Truktur Organisasi
 Route::get('/truktur-organisasi', function () {
-    $organnis = UserOrganis::all();
+    $organnis = UserOrganis::orderBy('created_at', 'desc')->get();
     return view('home.profil.trukturorgan', compact('organnis'));
 });
-// Staf
 Route::get('/page-staf', function () {
-    return view('home.profil.staf');
+    $datastaf = UserStaf::all();
+    return view('home.profil.staf', compact('datastaf'));
 });
-// Daftar Dosen
 Route::get('/daftar-dosen', function () {
-    return view('home.profil.daftardosen');
+    $dosen = UserDaftardosen::all();
+    return view('home.profil.daftardosen', compact('dosen'));
+});
+
+// Truktur Kurikulum
+Route::get('/truktur-kurikulum', function () {
+    return view('home.akademik.kurikulum');
+});
+Route::get('/kurikulum-semesterI', function () {
+    $semester1 = UserSemestersatu::all();
+    return view('home.akademik.kurikulum.semestersatu', compact('semester1'));
+});
+Route::get('/kurikulum-semesterII', function () {
+    $semester2 = UserSemesterdua::all();
+    return view('home.akademik.kurikulum.semesterdua', compact('semester2'));
+});
+Route::get('/kurikulum-semesterIII', function () {
+    $semester3 = UserSemestertiga::all();
+    return view('home.akademik.kurikulum.semestertiga', compact('semester3'));
+});
+Route::get('/kurikulum-semesterIV', function () {
+    return view('home.akademik.kurikulum.semesterempat');
+});
+Route::get('/kelender-akademik', function () {
+    $kelenderakademik = UserKelender::orderBy('created_at', 'desc')->get();
+    return view('home.akademik.kelender', compact('kelenderakademik'));
+});
+Route::get('/panduan-akademik', function () {
+    $panduanakademik = UserPanduanakademik::orderBy('created_at', 'desc')->get();
+    return view('home.akademik.panduanakademik', compact('panduanakademik'));
 });
 
 
@@ -179,6 +215,29 @@ Route::middleware(['auth'])->group(function () {
 });
 Route::middleware(['auth'])->group(function () {
     Route::resource('organis', adminOrganisController::class);
+});
+Route::middleware(['auth'])->group(function () {
+    Route::resource('staf', adminStafController::class);
+});
+Route::middleware(['auth'])->group(function () {
+    Route::resource('daftardosen', adminDaftardosenController::class);
+});
+
+// Bagian Menu Akademik
+Route::middleware(['auth'])->group(function () {
+    Route::resource('semestersatu', adminSemestersatuController::class);
+});
+Route::middleware(['auth'])->group(function () {
+    Route::resource('semesterdua', adminSemesterduaController::class);
+});
+Route::middleware(['auth'])->group(function () {
+    Route::resource('semestertiga', adminSemestertigaController::class);
+});
+Route::middleware(['auth'])->group(function () {
+    Route::resource('kelender', adminKelenderController::class);
+});
+Route::middleware(['auth'])->group(function () {
+    Route::resource('panduanakademik', adminPanduanakademikController::class);
 });
 
 

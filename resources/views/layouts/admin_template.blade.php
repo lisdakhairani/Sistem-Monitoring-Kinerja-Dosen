@@ -7,7 +7,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>ppimfe | @yield('title')</title>
+    <title>PMIM | @yield('title')</title>
 
     <meta name="description" content="" />
 
@@ -155,6 +155,16 @@
                                     <div data-i18n="Connections">Struktur Organisasi</div>
                                 </a>
                             </li>
+                            <li class="menu-item  @if (isset($menuStaf)) {{ $menuStaf }} @endif">
+                                <a href="{{ route('staf.index') }}" class="menu-link">
+                                    <div data-i18n="Connections">Staf</div>
+                                </a>
+                            </li>
+                            <li class="menu-item  @if (isset($menuDosen)) {{ $menuDosen }} @endif">
+                                <a href="{{ route('daftardosen.index') }}" class="menu-link">
+                                    <div data-i18n="Connections">Dafatr Dosen</div>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="menu-item open" style="">
@@ -163,19 +173,19 @@
                             <div data-i18n="Menu Akademik">Menu Akademik</div>
                         </a>
                         <ul class="menu-sub">
-                            <li class="menu-item @if (isset($menuPosts)) {{ $menuPosts }} @endif">
-                                <a href="{{ route('posts.index') }}" class="menu-link">
-                                    <div data-i18n="Account">Post Artikel</div>
+                            <li class="menu-item @if (isset($menuSemester1)) {{ $menuSemester1 }} @endif">
+                                <a href="{{ route('semestersatu.index') }}" class="menu-link">
+                                    <div data-i18n="Account">Truktur Kurikulum</div>
                                 </a>
                             </li>
-                            <li class="menu-item @if (isset($menuSejarah)) {{ $menuSejarah }} @endif">
-                                <a href="{{ route('sejarahpmim.index') }}" class="menu-link">
-                                    <div data-i18n="Notifications">Sejarah PMIM</div>
+                            <li class="menu-item @if (isset($menuKelender)) {{ $menuKelender }} @endif">
+                                <a href="{{ route('kelender.index') }}" class="menu-link">
+                                    <div data-i18n="Account">Kelender Akademik</div>
                                 </a>
                             </li>
-                            <li class="menu-item  @if (isset($menuProduk)) {{ $menuProduk }} @endif">
-                                <a href="{{ route('produk.index') }}" class="menu-link">
-                                    <div data-i18n="Connections">Sarana & Prasarana</div>
+                            <li class="menu-item @if (isset($menuPanduan)) {{ $menuPanduan }} @endif">
+                                <a href="{{ route('panduanakademik.index') }}" class="menu-link">
+                                    <div data-i18n="Account">Panduan Akademik</div>
                                 </a>
                             </li>
                         </ul>
