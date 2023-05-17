@@ -5,10 +5,10 @@
     <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Data semester2 /</span> List
     </h4>
-
     <a href="{{ route('semestersatu.index') }}" class="btn btn-success">Semester I</a>
     <a href="{{ route('semesterdua.index') }}" class="btn btn-success">Semester II</a>
     <a href="{{ route('semestertiga.index') }}" class="btn btn-success">Semester III</a>
+    <a href="{{ route('semesterempat.index') }}" class="btn btn-success">Semester IV</a>
 
     <div class="row mt-3">
         <div class="col-lg-12 mb-4 order-0">

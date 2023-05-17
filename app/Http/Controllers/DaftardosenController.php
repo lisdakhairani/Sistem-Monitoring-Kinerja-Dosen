@@ -14,7 +14,7 @@ class DaftardosenController extends Controller
      */
     public function index()
     {
-        $daftardosen = Daftardosen::latest()->paginate(10);
+        $daftardosen = Daftardosen::latest()->orderBy('created_at', 'desc')->paginate(10);
         $menuDosen = 'active';
         return view('dashboard.profil.daftardosen.index', compact('daftardosen', 'menuDosen'));
     }
@@ -36,13 +36,13 @@ class DaftardosenController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'title' => 'nullable|min:3',
-                'nip' => 'nullable|min:3',
-                'jabatan' => 'nullable|min:3',
-                'sinta' => 'nullable|min:3',
-                'scopus' => 'nullable|min:3',
-                'scholar' => 'nullable|min:3',
-                'image' => 'nullable|image|file|mimes:jpeg,png,jpg|max:3072',
+                'title' => 'nullable|min:1',
+                'nip' => 'nullable|min:1',
+                'jabatan' => 'nullable|min:1',
+                'sinta' => 'nullable|min:1',
+                'scopus' => 'nullable|min:1',
+                'scholar' => 'nullable|min:1',
+                'image' => 'nullable|image|file|mimes:jpeg,png,jpg|max:5024',
 
             ]);
 
@@ -88,13 +88,13 @@ class DaftardosenController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'title' => 'nullable|min:3',
-                'nip' => 'nullable|min:3',
-                'jabatan' => 'nullable|min:3',
-                'sinta' => 'nullable|min:3',
-                'scopus' => 'nullable|min:3',
-                'scholar' => 'nullable|min:3',
-                'image' => 'nullable|image|file|mimes:jpeg,png,jpg|max:3072',
+                'title' => 'nullable|min:1',
+                'nip' => 'nullable|min:1',
+                'jabatan' => 'nullable|min:1',
+                'sinta' => 'nullable|min:1',
+                'scopus' => 'nullable|min:1',
+                'scholar' => 'nullable|min:1',
+                'image' => 'nullable|image|file|mimes:jpeg,png,jpg|max:5024',
 
             ]);
 

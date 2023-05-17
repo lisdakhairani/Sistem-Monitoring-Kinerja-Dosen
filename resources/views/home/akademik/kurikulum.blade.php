@@ -19,10 +19,10 @@
             </p>
             <br>
 
-            <a href="{{url('/kurikulum-semesterI')}}" class="btn btn-success">Semester I</a>
-            <a href="{{url('/kurikulum-semesterII')}}" class="btn btn-success">Semester II</a>
-            <a href="{{url('/kurikulum-semesterIII')}}" class="btn btn-success">Semester III</a>
-            <a href="{{url('/kurikulum-semesterIV')}}" class="btn btn-success">Semester IV</a>
+            <a href="{{url('/kurikulum-semesterI')}}" class="btn btn-success mt-2">Semester I</a>
+            <a href="{{url('/kurikulum-semesterII')}}" class="btn btn-success mt-2">Semester II</a>
+            <a href="{{url('/kurikulum-semesterIII')}}" class="btn btn-success mt-2">Semester III</a>
+            <a href="{{url('/kurikulum-semesterIV')}}" class="btn btn-success mt-2">Semester IV</a>
         </div>
     </div>
 </div>

@@ -2,7 +2,7 @@
 @section('title', 'Panduan Akademik')
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Forms /</span> Edit Data</h4>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Forms Panduan AKademik /</span> Edit Data</h4>
 
     <div class="row">
         @if ($message = Session::get('success'))

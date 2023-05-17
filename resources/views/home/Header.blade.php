@@ -68,16 +68,16 @@
                         <li><a href="{{ url('/truktur-kurikulum') }}">Struktur Kurikulum</a></li>
                         <li><a href="{{ url('/kelender-akademik') }}">Kalender Akademik</a></li>
                         <li><a href="{{ url('/panduan-akademik') }}">Panduan Akademik</a></li>
-                        <li><a href="/galery">Galeri</a></li>
-                        <li><a href="/download">Download</a></li>
+                        <li><a href="{{ url('/galeri-akademik') }}">Galeri</a></li>
+                        <li><a href="{{ url('/download-akademik') }}">Download</a></li>
                     </ul>
                 </li>
                 <li class="dropdown"><a href="#"><span>Kemahasiswaan</span> <i
                             class="bi bi-chevron-down dropdown-indicator"></i></a>
                     <ul>
-                        <li><a href="#">Prestasi Mahasiswa</a></li>
-                        <li><a href="#">Tracer Study</a></li>
-                        <li><a href="#">Publikasi</a></li>
+                        <li><a href="{{ url('/prestasi-mahasiswa') }}">Prestasi Mahasiswa</a></li>
+                        <li><a href="{{url('/tracer-study')}}">Tracer Study</a></li>
+                        <li><a href="{{url('/publikasiuser')}}">Publikasi</a></li>
                     </ul>
                 </li>
                 <li><a href="https://ojs.unimal.ac.id/jmi" target="_black">J-MIND</a></li>
@@ -85,9 +85,9 @@
                 <li class="dropdown"><a href="#"><span>Download</span> <i
                             class="bi bi-chevron-down dropdown-indicator"></i></a>
                     <ul class="dropdown-active">
-                        <li><a href="/adimistrasi">Dokumen Akreditasi`</a></li>
-                        <li><a href="/adimistrasi">Dokumen Administrasi</a></li>
-                        <li><a href="/pengabdian">Dokumen Penjaminan <br> Mutu</a></li>
+                        <li><a href="{{ url('/akreditasi-akademik') }}">Dokumen Akreditasi`</a></li>
+                        <li><a href="{{ url('/download-adminis') }}">Dokumen Administrasi</a></li>
+                        <li><a href="{{ url('/download-penjaminan-mutu') }}">Dokumen Penjaminan <br> Mutu</a></li>
                         </a>
                     </ul>
                 </li>

@@ -168,7 +168,7 @@
                         </ul>
                     </li>
                     <li class="menu-item open" style="">
-                        <a href="javascript:void(1);" class="menu-link menu-toggle">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-dock-top"></i>
                             <div data-i18n="Menu Akademik">Menu Akademik</div>
                         </a>
@@ -188,11 +188,67 @@
                                     <div data-i18n="Account">Panduan Akademik</div>
                                 </a>
                             </li>
+                            <li class="menu-item @if (isset($menugaleriakademik)) {{ $menugaleriakademik }} @endif">
+                                <a href="{{ route('galeriakademik.index') }}" class="menu-link">
+                                    <div data-i18n="Account">Galeri Akademik</div>
+                                </a>
+                            </li>
+                            <li class="menu-item @if (isset($menuDownloadk)) {{ $menuDownloadk }} @endif">
+                                <a href="{{ route('downloadakademik.index') }}" class="menu-link">
+                                    <div data-i18n="Account">Download Akademik</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item open" style="">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                            <div data-i18n="Menu Akademik">Menu Download</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item @if (isset($menuAkreditasi)) {{ $menuAkreditasi }} @endif">
+                                <a href="{{ route('akreditasi.index') }}" class="menu-link">
+                                    <div data-i18n="Account">Akreditas</div>
+                                </a>
+                            </li>
+                            <li class="menu-item @if (isset($menuAdministrasi)) {{ $menuAdministrasi }} @endif">
+                                <a href="{{ route('administrasi.index') }}" class="menu-link">
+                                    <div data-i18n="Account">Data Administrasi</div>
+                                </a>
+                            </li>
+                            <li class="menu-item @if (isset($menuPenjaminanmutu)) {{ $menuPenjaminanmutu }} @endif">
+                                <a href="{{ route('penjaminanmutu.index') }}" class="menu-link">
+                                    <div data-i18n="Account">Data Penjaminan Mutu</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item open" style="">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                            <div data-i18n="Menu Akademik">Menu Prestasi MHS</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item @if (isset($menuPrestasi)) {{ $menuPrestasi }} @endif">
+                                <a href="{{ route('prestasimahasiswa.index') }}" class="menu-link">
+                                    <div data-i18n="Account">Prestasi MHS</div>
+                                </a>
+                            </li>
+                            <li class="menu-item @if (isset($menuTracer)) {{ $menuTracer }} @endif">
+                                <a href="{{ route('tracerstudy.index') }}" class="menu-link">
+                                    <div data-i18n="Account">Tracer Study</div>
+                                </a>
+                            </li>
+                            <li class="menu-item @if (isset($menuPublikasi)) {{ $menuPublikasi }} @endif">
+                                <a href="{{ route('publikasi.index') }}" class="menu-link">
+                                    <div data-i18n="Account">Publikasi</div>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     @endif
                     {{-- @endcan --}}
-                    <li class="menu-header small text-uppercase">
+                    {{-- <li class="menu-header small text-uppercase">
                         <span class="menu-header-text">Pages User</span>
                     </li>
                     <li class="menu-item @if (isset($datauser)) {{ $datauser }}@endif">
@@ -200,7 +256,7 @@
                             <i class="menu-icon tf-icons bx bx-user-circle"></i>
                             <div data-i18n="Account Settings">My Account</div>
                         </a>
-                    </li>
+                    </li> --}}
                 </ul>
             </aside>
             <!-- / Menu -->
@@ -273,11 +329,11 @@
         </div>
 
         <!-- Overlay -->
-        <div class="layout-overlay layout-menu-toggle"></div>
+        {{-- <div class="layout-overlay layout-menu-toggle"></div>
         <div class="buy-now">
             <a href="https://wa.me/082267429797?text=Assalamualaikum%20wr.wb%20saya%20anggota%20Miti%20Community"
                 target="_blank" class="btn btn-primary btn-buy-now"> Chats Admin <i class="bi bi-whatsapp"></i></a>
-        </div>
+        </div> --}}
     </div>
     <!-- / Layout wrapper -->
 

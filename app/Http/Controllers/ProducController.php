@@ -16,7 +16,7 @@ class ProducController extends Controller
      */
     public function index()
     {
-        $produk = Produk::where('user_id', auth()->user()->id)->paginate(10);
+        $produk = Produk::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->paginate(10);
         $menuProduk = 'active';
         return view('dashboard.produk.index', compact('menuProduk', 'produk'));
     }

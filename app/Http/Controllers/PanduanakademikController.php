@@ -14,7 +14,7 @@ class PanduanakademikController extends Controller
      */
     public function index()
     {
-        $panduan = Panduanakademik::latest()->paginate(5);
+        $panduan = Panduanakademik::latest()->orderBy('created_at', 'desc')->paginate(5);
         $menuPanduan = 'active';
         return view('dashboard.akademik.panduank.index', compact('menuPanduan', 'panduan'));
     }

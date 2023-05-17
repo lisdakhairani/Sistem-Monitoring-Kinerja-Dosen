@@ -14,7 +14,7 @@ class KerjasamaController extends Controller
      */
     public function index()
     {
-        $kerjasama = Kerjasama::latest()->paginate(5);
+        $kerjasama = Kerjasama::latest()->orderBy('created_at', 'desc')->paginate(5);
         $menuKerjasama = 'active';
         return view('dashboard.profil.kerjasama.index', compact('menuKerjasama', 'kerjasama'));
     }

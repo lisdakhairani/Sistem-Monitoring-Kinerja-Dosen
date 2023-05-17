@@ -8,7 +8,9 @@
             <div
                 class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
                 <h2>Program Magister Ilmu Manajemen</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem ducimus veritatis vero voluptatum odio.
+                <p>
+                    Menjadi Program Studi Magister yang Berdaya Saing dalam Pengembangan Ilmu Manajemen Berbasis Potensi
+                    Lokal Di Asia.
                 </p>
                 <div class="d-flex justify-content-center justify-content-lg-start">
                     @if (Route::has('login'))
@@ -21,7 +23,7 @@
                             class="text-sm text-gray-700 dark:text-gray-500 underline btn-get-started btn-sm">Login</a>
                         --}}
                         @if (Route::has('register'))
-                        <a href="{{ route('register') }}"
+                        <a href="{{ url('/visi-misi-tujuan') }}"
                             class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline btn-get-started fw-bold">Read
                             More</a>
                         @endif
@@ -31,7 +33,8 @@
                 </div>
             </div>
             <div class="col-lg-6 order-1 order-lg-2">
-                <img src="/img/hero-bg.png" class="img-fluid rounded" alt="" data-aos="zoom-out" data-aos-delay="60">
+                <img src="/img/selamat-datang.png" class="img-fluid rounded" alt="" data-aos="zoom-out"
+                    data-aos-delay="60">
             </div>
         </div>
     </div>
@@ -40,17 +43,22 @@
 {{-- Artikel --}}
 <section id="recent-posts" class="recent-posts sections-bg">
     <div class="container">
-
         <div class="section-header d-flex justify-end">
             <h2>Informasi Baru</h2>
         </div>
-
         <div class="row gy-4">
             @forelse ($dataList as $item)
             <div class="col-xl-4 col-md-6">
                 <article>
                     <div class="post-img">
-                        <img src="{{ asset('storage/' . $item->image) }}" alt="" class="img-fluid">
+                        @if ($item->image)
+                        <div style="max-height: 350px; overflow:hidden;">
+                            <img src="{{ asset('storage/' . $item->image) }}" class="card-img-top"
+                                alt="{{ $item->category->name }}" class="img-fluid " width="100%">
+                        </div>
+                        @else
+                        <img src="{{ asset('/img/blog-bg.jpg') }}" alt="Avatar" width="100%">
+                        @endif
                     </div>
                     <div class="d-flex justify-content-between">
                         <p class="post-category text-success fw-semibold">{{ $item->category->name }}</p>
@@ -82,6 +90,10 @@
             </div>
             @endforelse
         </div><!-- End recent posts list -->
+
+        <div class="d-flex justify-content-center mt-4">
+            <a href="{{ url('/blog-posts') }}" class=" btn btn-outline-success rounded">All</a>
+        </div>
     </div>
 </section>
 @endsection

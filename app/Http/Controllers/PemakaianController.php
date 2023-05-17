@@ -16,7 +16,7 @@ class PemakaianController extends Controller
     public function index()
     {
         $menuPakai = 'active';
-        $pakai = Pemakaian::latest()->paginate(5);
+        $pakai = Pemakaian::latest()->orderBy('created_at', 'desc')->paginate(5);
         return view('dashboard.pemakaian.index', compact('pakai', 'menuPakai'));
     }
 

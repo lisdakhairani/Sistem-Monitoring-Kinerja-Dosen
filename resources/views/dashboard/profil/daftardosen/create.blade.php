@@ -101,7 +101,7 @@
                                     </div>
 
                                     <div class="mt-3">
-                                        <input type="submit" value="Update" id="save" name="save"
+                                        <input type="submit" value="Tambah" id="save" name="save"
                                             class="btn btn-primary">
                                     </div>
                                 </form>

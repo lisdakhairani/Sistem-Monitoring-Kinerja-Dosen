@@ -14,7 +14,7 @@ class KelenderController extends Controller
      */
     public function index()
     {
-        $kelender = Kelender::latest()->paginate(5);
+        $kelender = Kelender::latest()->orderBy('created_at', 'desc')->paginate(5);
         $menuKelender = 'active';
         return view('dashboard.akademik.kelender.index', compact('kelender', 'menuKelender'));
     }

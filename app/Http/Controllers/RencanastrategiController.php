@@ -14,7 +14,7 @@ class RencanastrategiController extends Controller
      */
     public function index()
     {
-        $rencana = Rencanastrategi::latest()->paginate(5);
+        $rencana = Rencanastrategi::latest()->orderBy('created_at', 'desc')->paginate(5);
         $menuRencana = 'active';
         return view('dashboard.profil.rencanastrategi.index', compact('menuRencana', 'rencana'));
     }

@@ -19,22 +19,18 @@
                     <thead>
                         <tr>
                             <th scope="col">No</th>
-                            <th scope="col">KODE MK</th>
                             <th scope="col">MATA KULIAH</th>
                             <th scope="col">SKS</th>
-                            <th scope="col">Kontrensasi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @foreach ($semester3 as $item)
+                        @foreach ($semester4 as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->kodemk }}</td>
                             <td>{{ $item->matakuliah }}</td>
                             <td>{{ $item->sks }}</td>
-                            <td>{{ $item->kontrensasi }}</td>
                         </tr>
-                        @endforeach --}}
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -49,12 +45,12 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        {{-- @foreach ($semester3 as $item)
+                        @foreach ($semester4 as $item)
                         <h3>{{ $item->matakuliah }}</h1>
                             <embed class="embed-responsive-item mt-3" async="async"
                                 src="{{ asset('storage/' . $item->filedata) }}#toolbar=0" width="100%"
                                 height="500"></embed>
-                            @endforeach --}}
+                            @endforeach
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

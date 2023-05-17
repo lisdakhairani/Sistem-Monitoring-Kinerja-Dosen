@@ -13,7 +13,7 @@ class ProfillulusController extends Controller
      */
     public function index()
     {
-        $profillulus = Profillulusan::latest()->paginate(5);
+        $profillulus = Profillulusan::latest()->orderBy('created_at', 'desc')->paginate(5);
         $menuProfillulus = 'active';
         return view('dashboard.profil.profillulus.index', compact('profillulus', 'menuProfillulus'));
     }

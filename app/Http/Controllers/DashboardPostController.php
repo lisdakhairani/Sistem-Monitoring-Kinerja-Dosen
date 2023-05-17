@@ -14,12 +14,23 @@ class DashboardPostController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function index()
+    // {
+    //     $posts = Post::where('user_id', auth()->user()->id)->paginate(10);
+    //     $menuPosts = 'active';
+    //     return view('dashboard.posts.index', compact('menuPosts', 'posts'));
+    // }
     public function index()
     {
-        $posts = Post::where('user_id', auth()->user()->id)->paginate(10);
+        $posts = Post::where('user_id', auth()->user()->id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
         $menuPosts = 'active';
+
         return view('dashboard.posts.index', compact('menuPosts', 'posts'));
     }
+
 
     /**
      * Show the form for creating a new resource.

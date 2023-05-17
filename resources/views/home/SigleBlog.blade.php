@@ -26,9 +26,12 @@
                     <div class="meta-top">
                         <ul>
                             <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a
-                                    href="blog-details.html">{{ $post->author->name }}</a></li>
-                            <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
-                                    href="blog-details.html"><time
+                                    href="{{ url('/blog-posts') }}">{{ $post->author->name }}</a></li>
+
+                            <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a
+                                    href="{{ url('/blog-posts') }}">{{ $post->category->name }}</a></li>
+
+                            <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="#"><time
                                         datetime="{{ $post->created_at->format('Y-m-d') }}">{{
                                         $post->created_at->format('M j, Y') }}</time></a>
                             </li>

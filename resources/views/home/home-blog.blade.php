@@ -18,7 +18,14 @@
             <div class="col-xl-4 col-md-6">
                 <article>
                     <div class="post-img">
-                        <img src="{{ asset('storage/' . $item->image) }}" alt="" class="img-fluid">
+                        @if ($item->image)
+                        <div style="max-height: 350px; overflow:hidden;">
+                            <img src="{{ asset('storage/' . $item->image) }}" class="card-img-top mt-3"
+                                alt="{{ $item->category->name }}" class="img-fluid " width="100%">
+                        </div>
+                        @else
+                        <img src="{{ asset('/img/blog-bg.jpg') }}" alt="Avatar" width="100%">
+                        @endif
                     </div>
                     <div class="d-flex justify-content-between">
                         <p class="post-category text-success fw-semibold">{{ $item->category->name }}</p>

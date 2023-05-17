@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
     <h4 class="fw-bold py-3 mb-4">
-        <span class="text-muted fw-light">kerja sama /</span> Add
+        <span class="text-muted fw-light">Panduan AKademik /</span> Add
     </h4>
     <div class="row">
         <div class="col-lg-12 mb-4 order-0">
@@ -40,7 +40,7 @@
 
 
                                     <div class="mt-3">
-                                        <input type="submit" value="Update" id="save" name="save"
+                                        <input type="submit" value="Tambah" id="save" name="save"
                                             class="btn btn-primary">
                                     </div>
                                 </form>
