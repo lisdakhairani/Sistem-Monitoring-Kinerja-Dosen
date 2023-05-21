@@ -10,11 +10,15 @@
         </div>
 
         <div class="row gy-4">
-            @forelse ($prestasimhs as $item)
+            @foreach ($prestasimhs as $item)
             <div class="col-xl-4 col-md-6">
                 <article>
                     <div class="post-img">
-                        <img src="{{ asset('storage/' . $item->image) }}" alt="" class="img-fluid">
+                        <a href="{{ asset('storage/' . $item->image) }}" data-gallery="portfolio-gallery-app"
+                            class="glightbox">
+                            <img src="{{ asset('storage/' . $item->image) }}" class="img-fluid" alt="">
+                        </a>
+                        {{-- <img src="{{ asset('storage/' . $item->image) }}" alt="" class="img-fluid"> --}}
                     </div>
                     <div class="d-flex justify-content-between">
                         {{-- <p class="post-category text-success fw-semibold">{{ $item->category->name }}</p> --}}
@@ -27,20 +31,8 @@
                         </h2>
                     </h5>
                 </article>
-                {{--
-            </div><!-- End post list item --> --}}
-            @empty
-            <div class="page-wrap d-flex flex-row align-items-center">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-md-12 text-center">
-                            {{-- <span class="display-1 d-block">404</span>
-                            <div class="mb-4 lead">not found.</div> --}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endforelse
+            </div><!-- End post list item -->
+            @endforeach
         </div><!-- End recent posts list -->
     </div>
 </section>

@@ -75,7 +75,7 @@
                 <li class="dropdown"><a href="#"><span>Kemahasiswaan</span> <i
                             class="bi bi-chevron-down dropdown-indicator"></i></a>
                     <ul>
-                        <li><a href="{{ url('/prestasi-mahasiswa') }}">Prestasi Mahasiswa</a></li>
+                        <li><a href="{{url('/prestasi-mahasiswa') }}">Prestasi Mahasiswa</a></li>
                         <li><a href="{{url('/tracer-study')}}">Tracer Study</a></li>
                         <li><a href="{{url('/publikasiuser')}}">Publikasi</a></li>
                     </ul>
@@ -84,11 +84,19 @@
 
                 <li class="dropdown"><a href="#"><span>Download</span> <i
                             class="bi bi-chevron-down dropdown-indicator"></i></a>
-                    <ul class="dropdown-active">
-                        <li><a href="{{ url('/akreditasi-akademik') }}">Dokumen Akreditasi`</a></li>
+                    <ul>
+                        <li><a href="{{ url('/akreditasi-akademik') }}">Dokumen Akreditasi</a></li>
                         <li><a href="{{ url('/download-adminis') }}">Dokumen Administrasi</a></li>
                         <li><a href="{{ url('/download-penjaminan-mutu') }}">Dokumen Penjaminan <br> Mutu</a></li>
-                        </a>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#"><span>Pendaftaran</span> <i class="bi bi-chevron-down dropdown-indicator"></i>
+                    </a>
+                    <ul>
+                        <li><a href="https://forms.gle/QNxz9z6VhQK5Mx1S8" target="_black">Usulan Judul Tesis</a></li>
+                        <li><a href="https://forms.gle/vhkpSkLsUQ7q7wdQ9" target="_black">Daftar Seminar Tesis</a></li>
+                        <li><a href="https://forms.gle/Lnt5q5yCVc2XDzQ1A" target="_black">Daftar Sidang Tesis</a></li>
                     </ul>
                 </li>
                 {{-- <li><a href="{{ url('/contact') }}">Contact</a></li> --}}

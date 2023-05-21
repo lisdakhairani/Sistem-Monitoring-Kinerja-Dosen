@@ -230,7 +230,7 @@
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item @if (isset($menuPrestasi)) {{ $menuPrestasi }} @endif">
-                                <a href="{{ route('prestasimahasiswa.index') }}" class="menu-link">
+                                <a href="{{ route('prestasisiswa.index') }}" class="menu-link">
                                     <div data-i18n="Account">Prestasi MHS</div>
                                 </a>
                             </li>
@@ -273,6 +273,45 @@
                     </div>
 
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                        {{--Jam dan tanggal--}}
+                        <p class="text-primary" id="jam"></p>
+                        <p class="fw-bold mt-5" id="tanggal"></p>
+                        <script>
+                            function updateClock() {
+                                var now = new Date();
+
+                                var jam = now.getHours();
+                                var menit = now.getMinutes();
+                                var detik = now.getSeconds();
+
+                                var tanggal = now.getDate();
+                                var bulan = now.getMonth() + 1; // Ingat, bulan dimulai dari 0 (Januari = 0)
+                                var tahun = now.getFullYear();
+
+                                // Mengatur format waktu
+                                jam = (jam < 10) ? "0" + jam : jam;
+                                menit = (menit < 10) ? "0" + menit : menit;
+                                detik = (detik < 10) ? "0" + detik : detik;
+
+                                // Mengatur format tanggal
+                                bulan = (bulan < 10) ? "0" + bulan : bulan;
+                                tanggal = (tanggal < 10) ? "0" + tanggal : tanggal;
+
+                                var waktu = jam + ":" + menit + ":" + detik;
+                                var tanggalFormat = tanggal + "/" + bulan + "/" + tahun;
+
+                                // Memperbarui elemen HTML dengan waktu dan tanggal
+                                document.getElementById("jam").innerHTML = waktu;
+                                document.getElementById("tanggal").innerHTML = tanggalFormat;
+
+                                // Memperbarui setiap detik
+                                setTimeout(updateClock, 1000);
+                            }
+
+                            // Memanggil fungsi updateClock saat halaman dimuat
+                            window.onload = updateClock;
+                        </script>
+
                         @auth
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
                             <!-- Place this tag where you want the button to render. -->

@@ -54,6 +54,7 @@ use App\Http\Controllers\KerjasamaController as adminKerjasamaController;
 use App\Http\Controllers\OrganisController as adminOrganisController;
 use App\Http\Controllers\PanduanakademikController as adminPanduanakademikController;
 use App\Http\Controllers\PemakaianController as adminPemakaianController;
+use App\Http\Controllers\PengunjungController;
 use App\Http\Controllers\PenjaminanmutuController as adminPenjaminanmutuController;
 use App\Http\Controllers\PrestasisiswaController;
 use App\Http\Controllers\ProducController as adminProducController;
@@ -266,16 +267,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('tracerstudy', adminTracerstudyController::class);
     Route::resource('publikasi', adminPublikasiController::class);
+    Route::resource('prestasisiswa', PrestasisiswaController::class);
 });
-Route::resource('prestasimahasiswa', PrestasisiswaController::class)->names([
-    'index' => 'prestasimahasiswa.index',
-    'create' => 'prestasimahasiswa.create',
-    'store' => 'prestasimahasiswa.store',
-    'show' => 'prestasimahasiswa.show',
-    'edit' => 'prestasimahasiswa.edit',
-    'update' => 'prestasimahasiswa.update',
-    'destroy' => 'prestasimahasiswa.destroy',
-]);
+
+// PengunjungController
+Route::post('/record-visitor', [PengunjungController::class, 'recordVisitor']);
 
 
 

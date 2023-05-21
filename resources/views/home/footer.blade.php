@@ -63,12 +63,12 @@
                 <h4>Contact Us</h4>
                 <p>
                     Jl. Tgk Chik Ditiro No. 26, <br>
-                    Lancang Garam, Lhokseumawe <br>
-                    ACEH - Indonesia <br>
-                    <strong>Phone:</strong> +62 645 40210<br>
+                    Lancang Garam, Kota Lhokseumawe <br>
+                    Provinsi Aceh - Indonesia <br>
+                    <strong>Phone:</strong> +62811675194<br>
                     <strong>Fax:</strong> +62 645 40211<br>
-                    <strong>Email:</strong> ppim@fe-unimal.org<br>
-                    <strong>Website:</strong> http://ppimfe.unimal.ac.id<br>
+                    <strong>Email:</strong> ppim@unimal.ac.id<br>
+                    <strong>Website:</strong> https://ppimfe.unimal.ac.id/<br>
                 </p>
 
             </div>

@@ -40,11 +40,15 @@
     </div>
 </section>
 
+{{-- Iklan --}}
+@include('home.StatsCounterSection')
+
 {{-- Artikel --}}
 <section id="recent-posts" class="recent-posts sections-bg">
     <div class="container">
         <div class="section-header d-flex justify-end">
             <h2>Informasi Baru</h2>
+
         </div>
         <div class="row gy-4">
             @forelse ($dataList as $item)
@@ -69,7 +73,6 @@
                     </div>
                     <h5 class="title">
                         <a href="{{ route('post.show', $item->id) }}">{{ $item->title }}</a>
-                        {{-- <a href="{{ route('post.show', ['name' => $item->name]) }}">{{ $item->title }}</a> --}}
 
                         </h2>
                     </h5>
@@ -82,8 +85,6 @@
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-md-12 text-center">
-                            {{-- <span class="display-1 d-block">404</span>
-                            <div class="mb-4 lead">not found.</div> --}}
                         </div>
                     </div>
                 </div>

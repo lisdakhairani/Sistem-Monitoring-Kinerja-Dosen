@@ -15,7 +15,7 @@
                             <div class="d-flex justify-content-between">
                                 <h5 class="card-title text-primary">List Data</h5>
 
-                                <a href="{{ route('prestasimahasiswa.create') }}">
+                                <a href="{{ route('prestasisiswa.create') }}">
                                     <button class="btn btn-primary">Tambah</button>
                                 </a>
                             </div>
@@ -37,11 +37,11 @@
                                             <img src="" alt="">
                                         </td>
                                         {{-- <td>
-                                            <a href="{{ route ('prestasimahasiswa.edit', $row->id) }}"
+                                            <a href="{{ route ('prestasisiswa.edit', $row->id) }}"
                                                 class="badge bg-warning"><i class="bi bi-pencil-square"></i></a>
 
-                                            <form action="{{ route('prestasimahasiswa.destroy', $row->id) }}"
-                                                method="POST" class="d-inline">
+                                            <form action="{{ route('prestasisiswa.destroy', $row->id) }}" method="POST"
+                                                class="d-inline">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button class="badge bg-danger border-0"
@@ -49,6 +49,23 @@
                                                         class="bi bi-x-circle-fill"></i></button>
                                             </form>
                                         </td> --}}
+                                        <td>
+                                            @if ($row->id)
+                                            <a href="{{ route('prestasisiswa.edit', $row->id) }}"
+                                                class="badge bg-warning"><i class="bi bi-pencil-square"></i></a>
+                                            <form action="{{ route('prestasisiswa.destroy', $row->id) }}" method="POST"
+                                                class="d-inline">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button class="badge bg-danger border-0"
+                                                    onclick="return confirm('Are you sure?')"><i
+                                                        class="bi bi-x-circle-fill"></i></button>
+                                            </form>
+                                            @else
+                                            <!-- Handle jika $row->id tidak memiliki nilai -->
+                                            @endif
+                                        </td>
+
                                     </tr>
                                     @endforeach
                                 </tbody>

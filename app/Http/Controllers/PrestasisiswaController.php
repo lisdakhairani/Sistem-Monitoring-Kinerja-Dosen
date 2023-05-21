@@ -35,9 +35,9 @@ class PrestasisiswaController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'title' => 'required|min:5',
+                'title' => 'nullable|min:5',
                 'image' => 'image|file|mimes:jpeg,png,jpg,max:3072',
-                'body' => 'required|min:10',
+                'body' => 'nullable|min:10',
             ]);
 
             if ($request->file('image')) {
@@ -48,9 +48,9 @@ class PrestasisiswaController extends Controller
 
             Prestasisiswa::create($validatedData);
 
-            return redirect()->route('prestasimahasiswa.index')->with(['success' => 'created successfully']);
+            return redirect()->route('prestasisiswa.index')->with(['success' => 'created successfully']);
         } catch (Exception $e) {
-            return redirect()->route('prestasimahasiswa.index')->with(['failed' => 'Ada kesalahan system. error :' . $e->getMessage()]);
+            return redirect()->route('prestasisiswa.index')->with(['failed' => 'Ada kesalahan system. error :' . $e->getMessage()]);
         }
     }
 
@@ -85,9 +85,9 @@ class PrestasisiswaController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'title' => 'required|min:5',
+                'title' => 'nullable|min:5',
                 'image' => 'image|file|mimes:jpeg,png,jpg,max:3072',
-                'body' => 'required|min:10',
+                'body' => 'nullable|min:10',
             ]);
 
             $prestasi = Prestasisiswa::findOrFail($id);
@@ -103,9 +103,9 @@ class PrestasisiswaController extends Controller
 
             $prestasi->update($validatedData);
 
-            return redirect()->route('prestasimahasiswa.index')->with(['success' => 'Update successfully']);
+            return redirect()->route('prestasisiswa.index')->with(['success' => 'Update successfully']);
         } catch (Exception $e) {
-            return redirect()->route('prestasimahasiswa.index')->with(['failed' => 'Ada kesalahan system. error :' . $e->getMessage()]);
+            return redirect()->route('prestasisiswa.index')->with(['failed' => 'Ada kesalahan system. error :' . $e->getMessage()]);
         }
     }
 
