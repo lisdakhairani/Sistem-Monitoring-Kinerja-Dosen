@@ -13,12 +13,6 @@ use App\Http\Controllers\UserSejarahpmimController as UserSejarahpmimController;
 use App\Http\Controllers\UserpageController as UserpageController;
 
 // Models dikirimkan untuk user
-use App\Models\Akreditas as UserAkreditas;
-use App\Models\Profillulusan as UserProfillulus;
-use App\Models\VisiMisi as UserVisiMisi;
-use App\Models\Kerjasama as UserKerjasama;
-use App\Models\Rencanastrategi as UserRencanastrategi;
-use App\Models\Organis as UserOrganis;
 use App\Models\Staf as UserStaf;
 use App\Models\Daftardosen as UserDaftardosen;
 use App\Models\Semestersatu as UserSemestersatu;
@@ -51,10 +45,10 @@ use App\Http\Controllers\DownloadakademikController as adminDownloadakademikCont
 use App\Http\Controllers\GaleriakademikController as adminGaleriakademikController;
 use App\Http\Controllers\KelenderController as adminKelenderController;
 use App\Http\Controllers\KerjasamaController as adminKerjasamaController;
+use App\Http\Controllers\LogokerjasamaController as adminLogokerjasamaController;
 use App\Http\Controllers\OrganisController as adminOrganisController;
 use App\Http\Controllers\PanduanakademikController as adminPanduanakademikController;
 use App\Http\Controllers\PemakaianController as adminPemakaianController;
-use App\Http\Controllers\PengunjungController;
 use App\Http\Controllers\PenjaminanmutuController as adminPenjaminanmutuController;
 use App\Http\Controllers\PrestasisiswaController;
 use App\Http\Controllers\ProducController as adminProducController;
@@ -270,8 +264,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('prestasisiswa', PrestasisiswaController::class);
 });
 
-// PengunjungController
-Route::post('/record-visitor', [PengunjungController::class, 'recordVisitor']);
+// Logo kerja sama
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::resource('logokerjasama', adminLogokerjasamaController::class);
+});
 
 
 

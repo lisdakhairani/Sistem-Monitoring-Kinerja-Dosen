@@ -40,8 +40,12 @@
     </div>
 </section>
 
+{{-- logo kerja sama --}}
+@include('home.Clients-Section')
+
 {{-- Iklan --}}
 @include('home.StatsCounterSection')
+
 
 {{-- Artikel --}}
 <section id="recent-posts" class="recent-posts sections-bg">

@@ -103,6 +103,12 @@
                             <div data-i18n="Account Settings">Users</div>
                         </a>
                     </li>
+                    <li class="menu-item @if (isset($menuLogokerja)) {{ $menuLogokerja }} @endif">
+                        <a href="{{ route('logokerjasama.index') }}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-user-circle"></i>
+                            <div data-i18n="Account Settings">Logo Keja Sama</div>
+                        </a>
+                    </li>
 
                     <li class="menu-item open" style="">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">

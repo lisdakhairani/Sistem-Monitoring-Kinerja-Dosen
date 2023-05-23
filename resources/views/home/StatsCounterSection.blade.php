@@ -1,5 +1,5 @@
 <section id="stats-counter" class="stats-counter">
-    <div class="container" data-aos="fade-up">
+    <div class="container">
         <div class="row gy-4 align-items-center">
             <div class="col-lg-6">
                 <img src="/img/iklan.jpg" alt="Miti" class="img-fluid rounded">
@@ -34,7 +34,7 @@
                         <div class="col-lg-4">
                             <div class="stats-item d-flex align-items-center">
                                 <h6>Views</h6>
-                                <span class="purecounter">{{ $visitorCount }}</span>
+                                <span class="fw-bold text-success">{{ $visitorCount }}</span>
                             </div><!-- End Stats Item -->
                         </div>
                         {{-- <div class="col-lg-4">

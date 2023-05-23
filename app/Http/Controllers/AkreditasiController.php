@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Storage;
 
 class AkreditasiController extends Controller
 {
-    //akreditasi
     /**
      * Display a listing of the resource.
      */
