@@ -1,12 +1,12 @@
 @extends('welcome')
 
-@section('title', 'Truktur Organisasi')
+@section('title', 'Struktur Organisasi')
 
 @section('content')
 
 <section id="blog" class="blog ">
     <div class="container" data-aos="fade-up">
-        <h4>Truktur Organisasi</h4>
+        <h4>Struktur Organisasi</h4>
         <div class="row g-12 mt-4">
             <div class="col-lg-12">
                 @foreach ($organnis as $item)

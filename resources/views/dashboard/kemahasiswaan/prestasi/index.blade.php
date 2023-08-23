@@ -36,35 +36,19 @@
                                         <td>
                                             <img src="" alt="">
                                         </td>
-                                        {{-- <td>
-                                            <a href="{{ route ('prestasisiswa.edit', $row->id) }}"
-                                                class="badge bg-warning"><i class="bi bi-pencil-square"></i></a>
-
-                                            <form action="{{ route('prestasisiswa.destroy', $row->id) }}" method="POST"
-                                                class="d-inline">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button class="badge bg-danger border-0"
-                                                    onclick="return confirm('Are you sure?')"><i
-                                                        class="bi bi-x-circle-fill"></i></button>
-                                            </form>
-                                        </td> --}}
                                         <td>
-                                            @if ($row->id)
-                                            <a href="{{ route('prestasisiswa.edit', $row->id) }}"
-                                                class="badge bg-warning"><i class="bi bi-pencil-square"></i></a>
-                                            <form action="{{ route('prestasisiswa.destroy', $row->id) }}" method="POST"
+                                            {{-- <a href="{{ route ('prestasisiswa.edit', $row->id) }}"
+                                                class="badge bg-warning"><i class="bi bi-pencil-square"></i></a> --}}
+
+                                            {{-- <form action="{{ route('prestasisiswa.destroy', $row->id) }}" method="POST"
                                                 class="d-inline">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button class="badge bg-danger border-0"
                                                     onclick="return confirm('Are you sure?')"><i
                                                         class="bi bi-x-circle-fill"></i></button>
-                                            </form>
-                                            @else
-                                            <!-- Handle jika $row->id tidak memiliki nilai -->
-                                            @endif
-                                        </td>
+                                            </form> --}}
+                                        </td>                                        
 
                                     </tr>
                                     @endforeach

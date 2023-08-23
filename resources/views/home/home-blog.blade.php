@@ -13,6 +13,17 @@
 <!-- ======= Blog Section ======= -->
 <section id="blog" class="blog">
     <div class="container" data-aos="fade-up">
+
+        {{-- Search --}}
+        <div class="col-12 col-sm-8 col-md-5">
+            <form action="" method="GET" class="d-flex justify-content-center justify-items-center">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="keyword" placeholder="Keyword" aria-label="Keyword">
+                    <button class="input-group-text btn btn-success" id="basic-addon1">Search</button>
+                </div>
+            </form>
+        </div>
+
         <div class="row gy-4 posts-list">
             @foreach ($dataitem as $item)
             <div class="col-xl-4 col-md-6">

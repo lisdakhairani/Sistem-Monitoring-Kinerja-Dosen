@@ -29,6 +29,11 @@
                     </div>
                     @endforeach
                 </div>
+
+                <div class="mt-3">
+                    {{ $galeriaka->withQueryString()->links() }}
+                </div>
+
                 <!-- End Portfolio Container -->
             </div>
             <!-- End Portfolio Container -->

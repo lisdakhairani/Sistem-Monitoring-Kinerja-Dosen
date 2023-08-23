@@ -23,19 +23,6 @@ class PostController extends Controller
         ]);
         $visitorCount = Visitor::count();
 
-        // // Hitung pengunjung
-        // $visitorCount = Cache::rememberForever('visitor_count', function () {
-        //     Visitor::create([
-        //         'ip_address' => request()->ip()
-        //     ]);
-        //     return Visitor::query()->count();
-        // });
-
-        // // Menyertakan tag no-cache pada respons
-        // header('Cache-Control: no-cache, no-store, must-revalidate');
-        // header('Pragma: no-cache');
-        // header('Expires: 0');
-
         $pakai = Pemakaian::latest()->limit(5)->get();
         $dataList = Post::latest()->limit(3)->get();
         $dataProduk = Produk::latest()->limit(6)->get();
@@ -43,33 +30,6 @@ class PostController extends Controller
 
         return view('home.Blog', compact('pakai', 'dataList', 'dataProduk', 'visitorCount', 'logo'));
     }
-
-
-
-    // public function index(Request $request)
-    // {
-    //     // hitung pengunjung
-    //     $visitor = new Visitor();
-    //     $visitor->ip_address = $request->ip();
-    //     $visitor->save();
-
-    //     $visitorCount = Visitor::count();
-    //     // ahkir
-    //     $pakai = Pemakaian::latest()->take(5)->get();
-    //     $dataList = Post::latest()->take(3)->get();
-    //     $dataProduk = Produk::latest()->take(6)->get();
-    //     return view('home.Blog', compact('pakai', 'dataList', 'dataProduk', 'visitorCount'));
-    // }
-
-    // public function show($name)
-    // {
-    //     try {
-    //         $post = Post::where('name', $name)->firstOrFail();
-    //         return view('home.SingleBlog', compact('post'));
-    //     } catch (Exception $e) {
-    //         return view('home.notfound');
-    //     }
-    // }
 
 
     public function show($id)
@@ -83,10 +43,24 @@ class PostController extends Controller
         }
     }
 
-    public function blogpost()
+    public function blogpost(Request $request)
     {
         $menuBlog = 'active';
-        $dataitem = Post::latest()->paginate(6);
+        $keyword = $request->input('keyword');
+
+        $dataitem = Post::latest()
+            ->where('title', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('body', 'LIKE', '%' . $keyword . '%')
+            ->paginate(6);
+
         return view('home.home-blog', compact('dataitem', 'menuBlog'));
     }
+
+
+    // public function blogpost()
+    // {
+    //     $menuBlog = 'active';
+    //     $dataitem = Post::latest()->paginate(6);
+    //     return view('home.home-blog', compact('dataitem', 'menuBlog'));
+    // }
 }

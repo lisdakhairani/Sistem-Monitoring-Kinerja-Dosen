@@ -170,7 +170,7 @@
                                 <a href="{{ route('daftardosen.index') }}" class="menu-link">
                                     <div data-i18n="Connections">Dafatr Dosen</div>
                                 </a>
-                            </li>
+                            </li>                            
                         </ul>
                     </li>
                     <li class="menu-item open" style="">
@@ -244,10 +244,15 @@
                                 <a href="{{ route('tracerstudy.index') }}" class="menu-link">
                                     <div data-i18n="Account">Tracer Study</div>
                                 </a>
+                            </li>                                                        
+                            <li class="menu-item  @if (isset($gorilembagaMenu)) {{ $gorilembagaMenu }} @endif">
+                                <a href="{{ route('publikasi-nasional.index') }}" class="menu-link">
+                                    <div data-i18n="Connections">Publikasi Nasional</div>
+                                </a>
                             </li>
-                            <li class="menu-item @if (isset($menuPublikasi)) {{ $menuPublikasi }} @endif">
-                                <a href="{{ route('publikasi.index') }}" class="menu-link">
-                                    <div data-i18n="Account">Publikasi</div>
+                            <li class="menu-item @if (isset($MenuInternasional)) {{ $MenuInternasional }} @endif">
+                                <a href="{{ route('publikasiinternasional.index') }}" class="menu-link">
+                                    <div data-i18n="Account">Publikasi Internasional</div>
                                 </a>
                             </li>
                         </ul>

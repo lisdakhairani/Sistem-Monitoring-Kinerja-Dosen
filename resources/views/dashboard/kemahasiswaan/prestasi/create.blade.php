@@ -12,7 +12,7 @@
                     <div class="col-sm-12">
                         <div class="card-body">
                             <div class="col-lg-8">
-                                <form method="POST" action="{{ route('prestasimahasiswa.store') }}"
+                                <form method="POST" action="{{ route('prestasisiswa.store') }}"
                                     enctype="multipart/form-data" class="mt-5">
                                     @csrf
                                     <div class="mb-3">

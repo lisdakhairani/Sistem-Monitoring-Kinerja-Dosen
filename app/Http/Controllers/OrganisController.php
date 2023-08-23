@@ -14,7 +14,7 @@ class OrganisController extends Controller
      */
     public function index()
     {
-        $organis = Organis::all();
+        $organis = Organis::latest()->orderBy('created_at', 'desc')->paginate(5);
         $menuOrganis = 'active';
         return view('dashboard.profil.organis.index', compact('menuOrganis', 'organis'));
     }

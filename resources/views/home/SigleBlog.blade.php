@@ -19,6 +19,23 @@
                         </div>
                         @endif
                     </div>
+                    <input type="text" id="linkBerita" value="{{ route('post.show', $post->id) }}" readonly hidden>
+                    <button class="copy-button btn btn-success" onclick="copyLink()"><i
+                            class="bi bi-share"></i></button>
+
+                    <script>
+                        function copyLink() {
+                            var linkBerita = document.getElementById("linkBerita");
+                            linkBerita.removeAttribute('hidden'); // Menghapus atribut hidden
+                            linkBerita.select();
+                            linkBerita.setSelectionRange(0, 99999);
+                            document.execCommand("copy");
+                            linkBerita.setAttribute('hidden', 'true'); // Menambahkan kembali atribut hidden
+                            alert("Link berita telah disalin: " + linkBerita.value);
+                        }
+                    </script>
+
+
 
                     <h2 class="title">{{ $post->title }}
                     </h2>

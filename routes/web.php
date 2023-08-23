@@ -65,6 +65,10 @@ use App\Http\Controllers\StafController as adminStafController;
 use App\Http\Controllers\TracerstudyController as adminTracerstudyController;
 use App\Http\Controllers\VisimisiController as adminVisimisiController;
 
+use App\Http\Controllers\PublikasiInternasionalController;
+use App\Http\Controllers\PublikasiNasionalController;
+use App\Http\Controllers\CategoriInternasionalController;
+use App\Http\Controllers\CategorisPublikasiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,7 +85,7 @@ use App\Http\Controllers\VisimisiController as adminVisimisiController;
 // route data kirim ke halaman utama ke user
 // route blog
 Route::get('/', [UserHomeController::class, 'index']);
-Route::get('post-detail/{id}/show', [UserHomeController::class, 'show'])->name('post.show');
+Route::get('program-magister-ilmu-manajemen/{id}/show', [UserHomeController::class, 'show'])->name('post.show');
 Route::get('/blog-posts', [UserHomeController::class, 'blogpost'])->name('blog');
 // route produk
 Route::get('/produks', [UserProdukController::class, 'index']);
@@ -141,10 +145,15 @@ Route::get('/panduan-akademik', function () {
     $panduanakademik = UserPanduanakademik::orderBy('created_at', 'desc')->get();
     return view('home.akademik.panduanakademik', compact('panduanakademik'));
 });
+
 Route::get('/galeri-akademik', function () {
-    $galeriaka = UserGaleriakademik::orderBy('created_at', 'desc')->get();
+    $galeriaka = UserGaleriakademik::orderBy('created_at', 'desc')->paginate(1);
+    $galeriaka->appends(request()->query());
+    Paginator::useBootstrap();
+
     return view('home.akademik.galeri', compact('galeriaka'));
 });
+
 Route::get('/download-akademik', function () {
     $downloadakademik = UserDownloadakademik::orderBy('created_at', 'desc')->get();
     return view('home.akademik.download', compact('downloadakademik'));
@@ -160,7 +169,7 @@ Route::get('/download-penjaminan-mutu', function () {
 });
 
 Route::get('/akreditasi-akademik', function () {
-    $UserAkreditasi = UserAkreditasi::orderBy('created_at', 'asc')->paginate(5);
+    $UserAkreditasi = UserAkreditasi::orderBy('created_at', 'desc')->paginate(5);
     $UserAkreditasi->appends(request()->query());
     Paginator::useBootstrap();
     return view('home.download.akreditasi', compact('UserAkreditasi'));
@@ -177,12 +186,8 @@ Route::get('/tracer-study', function () {
     Paginator::useBootstrap();
     return view('home.kemahasiswaan.tracer', compact('traceruser'));
 });
-Route::get('/publikasiuser', function () {
-    $publikasiuser = UserPublikasi::orderBy('created_at', 'desc')->paginate(5);
-    $publikasiuser->appends(request()->query());
-    Paginator::useBootstrap();
-    return view('home.kemahasiswaan.publikasi', compact('publikasiuser'));
-});
+Route::get('/publikasiuser', [UserpageController::class, 'publikasinasional'])->name('publikasiuser');
+Route::get('/publikasi-inter', [UserpageController::class, 'internasional'])->name('publikasi-inter');
 
 
 
@@ -260,8 +265,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
 // Kemahasiswaan
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('tracerstudy', adminTracerstudyController::class);
-    Route::resource('publikasi', adminPublikasiController::class);
     Route::resource('prestasisiswa', PrestasisiswaController::class);
+    Route::resource('publikasi', adminPublikasiController::class);
+    Route::resource('categoripublik', CategorisPublikasiController::class);
+    Route::resource('publikasi-nasional', PublikasiNasionalController::class);
+    Route::resource('categoriinternasional', CategoriInternasionalController::class);
+    Route::resource('publikasiinternasional', PublikasiInternasionalController::class);
 });
 
 // Logo kerja sama

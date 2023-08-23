@@ -11,17 +11,16 @@
 
             <script type="text/javascript">
                 function googleTranslateElementInit() {
-                                new google.translate.TranslateElement({
-                                        pageLanguage: "ID",
-                                        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                                    },
-                                    "google_translate_element"
-                                );
-                            }
+                    new google.translate.TranslateElement({
+                            pageLanguage: "ID",
+                            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                        },
+                        "google_translate_element"
+                    );
+                }
             </script>
 
-            <script type="text/javascript"
-                src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+            <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
             </script>
 
         </div>
@@ -47,14 +46,14 @@
                 <li class="dropdown"><a href="#"><span>Profil</span> <i
                             class="bi bi-chevron-down dropdown-indicator"></i></a>
                     <ul>
-                        <li><a href="{{ url('/blog-posts') }}">Berita</a></li>
+                        <li><a href="{{ url('/blog-posts') }}">Berita & Pengumuman</a></li>
                         <li><a href="{{ url('/sejarah-pmim') }}">Sejarah PMIM</a></li>
                         <li><a href="{{ url('/produks') }}">Sarana dan prasarana</a></li>
                         <li><a href="{{ url('/visi-misi-tujuan') }}">Visi, Misi, Tujuan</a></li>
                         <li><a href="{{ url('/profil-lulusan') }}">Profil Lulusan</a></li>
                         <li><a href="{{ url('/kerja-sama-aliansi') }}">Kerja Sama & Aliansi</a></li>
                         <li><a href="{{ url('/rencana-strategi') }}">Rencana Strategi</a></li>
-                        <li><a href="{{url('/truktur-organisasi')}}">Struktur Organisasi</a></li>
+                        <li><a href="{{ url('/truktur-organisasi') }}">Struktur Organisasi</a></li>
                         <li><a href="{{ url('/page-staf') }}">Staf</a></li>
                         <li><a href="{{ url('/daftar-dosen') }}">Daftar Dosen</a></li>
                     </ul>
@@ -75,9 +74,15 @@
                 <li class="dropdown"><a href="#"><span>Kemahasiswaan</span> <i
                             class="bi bi-chevron-down dropdown-indicator"></i></a>
                     <ul>
-                        <li><a href="{{url('/prestasi-mahasiswa') }}">Prestasi Mahasiswa</a></li>
-                        <li><a href="{{url('/tracer-study')}}">Tracer Study</a></li>
-                        <li><a href="{{url('/publikasiuser')}}">Publikasi</a></li>
+                        <li><a href="{{ url('/prestasi-mahasiswa') }}">Prestasi Mahasiswa</a></li>
+                        <li><a href="{{ url('/tracer-study') }}">Tracer Study</a></li>
+                        <li class="dropdown"><a href="#"><span>Publikasi</span> <i
+                                    class="bi bi-chevron-right"></i></a>
+                            <ul>
+                                <li><a href="{{ url('/publikasiuser') }}">Nasional</a></li>
+                                <li><a href="{{ url('/publikasi-inter') }}">Internasional</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
                 <li><a href="https://ojs.unimal.ac.id/jmi" target="_black">J-MIND</a></li>
@@ -97,6 +102,8 @@
                         <li><a href="https://forms.gle/QNxz9z6VhQK5Mx1S8" target="_black">Usulan Judul Tesis</a></li>
                         <li><a href="https://forms.gle/vhkpSkLsUQ7q7wdQ9" target="_black">Daftar Seminar Tesis</a></li>
                         <li><a href="https://forms.gle/Lnt5q5yCVc2XDzQ1A" target="_black">Daftar Sidang Tesis</a></li>
+                        <li><a href="https://unimal.ac.id/layanan/berita/panduan-penelitian-dan-pengabdian-kepada-masyarakat-sumber-dana-pnbp-tahun-2023-universitas-malikussaleh"
+                                target="_black">Usulan Penelitian <br> PNBP</a></li>
                     </ul>
                 </li>
                 {{-- <li><a href="{{ url('/contact') }}">Contact</a></li> --}}

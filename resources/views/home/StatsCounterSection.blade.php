@@ -37,18 +37,6 @@
                                 <span class="fw-bold text-success">{{ $visitorCount }}</span>
                             </div><!-- End Stats Item -->
                         </div>
-                        {{-- <div class="col-lg-4">
-                            <div class="stats-item d-flex align-items-center">
-                                <span data-purecounter-start="0" data-purecounter-end="521"
-                                    data-purecounter-duration="0" class="purecounter">521</span>
-                            </div><!-- End Stats Item -->
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="stats-item d-flex align-items-center">
-                                <span data-purecounter-start="0" data-purecounter-end="453"
-                                    data-purecounter-duration="0" class="purecounter">453</span>
-                            </div><!-- End Stats Item -->
-                        </div> --}}
                     </div>
 
                 </div>
