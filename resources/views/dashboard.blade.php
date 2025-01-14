@@ -12,7 +12,6 @@
                                 <p class="mb-4">
                                     Welcome to Started Application
                                 </p>
-
                                 <a href="/" class="btn btn-sm btn-outline-primary">View
                                     Badges</a>
                             </div>

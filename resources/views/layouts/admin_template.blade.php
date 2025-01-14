@@ -257,17 +257,65 @@
                             </li>
                         </ul>
                     </li>
+                    
+                    <li class="menu-item open" style="">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                            <div data-i18n="Menu Akademik">Data Pendaftaran</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item @if (isset($menuPrestasi)) {{ $menuPrestasi }} @endif">
+                                <a href="#" class="menu-link">
+                                    <div data-i18n="Account">Data Usulan Judul Tesis</div>
+                                </a>
+                            </li>
+                            <li class="menu-item @if (isset($menuTracer)) {{ $menuTracer }} @endif">
+                                <a href="" class="menu-link">
+                                    <div data-i18n="Account">Data Daftar Seminar Tesis</div>
+                                </a>
+                            </li>                                                        
+                            <li class="menu-item  @if (isset($gorilembagaMenu)) {{ $gorilembagaMenu }} @endif">
+                                <a href="" class="menu-link">
+                                    <div data-i18n="Connections">Data Daftar Sidang Tesis</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     @endif
                     {{-- @endcan --}}
-                    {{-- <li class="menu-header small text-uppercase">
+                    <li class="menu-header small text-uppercase">
                         <span class="menu-header-text">Pages User</span>
                     </li>
-                    <li class="menu-item @if (isset($datauser)) {{ $datauser }}@endif">
+                    {{-- <li class="menu-item @if (isset($datauser)) {{ $datauser }}@endif">
                         <a href="{{route('data-user.index')}}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-user-circle"></i>
                             <div data-i18n="Account Settings">My Account</div>
                         </a>
                     </li> --}}
+                    <li class="menu-item open" style="">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                            <div data-i18n="Menu Akademik">Pendaftaran</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item @if (isset($menuPrestasi)) {{ $menuPrestasi }} @endif">
+                                <a href="#" class="menu-link">
+                                    <div data-i18n="Account">Usulan Judul Tesis</div>
+                                </a>
+                            </li>
+                            <li class="menu-item @if (isset($menuTracer)) {{ $menuTracer }} @endif">
+                                <a href="#" class="menu-link">
+                                    <div data-i18n="Account">Daftar Seminar Tesis</div>
+                                </a>
+                            </li>                                                        
+                            
+                            <li class="menu-item @if (isset($MenuInternasional)) {{ $MenuInternasional }} @endif">
+                                <a href="#" class="menu-link">
+                                    <div data-i18n="Account">Daftar Sidang Tesis</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </aside>
             <!-- / Menu -->
