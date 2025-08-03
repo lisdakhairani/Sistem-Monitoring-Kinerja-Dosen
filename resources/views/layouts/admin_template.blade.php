@@ -12,7 +12,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('/img/logo-unimal.png') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/logo-unimal.png') }}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -22,7 +22,7 @@
         rel="stylesheet" />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="{{ asset('/img/unimal_ppim.png') }}" />
+    <link rel="stylesheet" href="{{ asset('img/unimal_ppim.png') }}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -30,6 +30,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
         rel="stylesheet" />
+
+        <!-- Bootstrap CSS (di head) -->
 
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
@@ -53,8 +55,8 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="/assets/js/config.js"></script>
     {{-- trix --}}
-    <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/trix.css') }}">
-    <script type="text/javascript" src="{{ asset('/assets/js/trix.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/trix.css') }}">
+    <script type="text/javascript" src="{{ asset('assets/js/trix.js') }}"></script>
     <!-- Icon Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 </head>
@@ -70,7 +72,7 @@
 
                     <a href="{{ route('dashboard') }}" class="app-brand-link">
                         <span class="app-brand-logo demo">
-                            <img src="{{ asset('/img/unimal_ppim.png') }}" alt="ppimfe" width="200" class="rounded">
+                            <img src="{{ asset('img/unimal_ppim.png') }}" alt="ppimfe" width="200" class="rounded">
                         </span>
                         {{-- <span class="app-brand-text demo menu-text fw-bolder ms-2">Miti</span> --}}
                     </a>
@@ -84,238 +86,97 @@
                 <div class="menu-inner-shadow"></div>
 
                 <ul class="menu-inner py-1">
-                    <!-- Dashboard -->
-                    <li class="menu-item  @if (isset($menuDashbord)) {{ $menuDashbord }} @endif">
-                        <a href="{{ route('dashboard') }}" class="menu-link">
+                    
+                    @if (Auth::user()->is_admin == 2)
+                    <li class="menu-item  @if (isset($menudashbord)) {{ $menudashbord }} @endif">
+                        <a href="{{ route('dashboardadmin') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Analytics">Dashboard</div>
                         </a>
                     </li>
-
-                    {{-- @can('admin') --}}
-                    @if (Auth::user()->is_admin == 1)
-                    <li class="menu-header small text-uppercase">
-                        <span class="menu-header-text">Pages Admin</span>
-                    </li>
-                    <li class="menu-item @if (isset($menuUsers)) {{ $menuUsers }} @endif">
-                        <a href="{{ route('users.index') }}" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-user-circle"></i>
-                            <div data-i18n="Account Settings">Users</div>
-                        </a>
-                    </li>
-                    <li class="menu-item @if (isset($menuLogokerja)) {{ $menuLogokerja }} @endif">
-                        <a href="{{ route('logokerjasama.index') }}" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-user-circle"></i>
-                            <div data-i18n="Account Settings">Logo Keja Sama</div>
-                        </a>
-                    </li>
-
                     <li class="menu-item open" style="">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                            <div data-i18n="Menu Profil">Menu Profil</div>
+                            <div data-i18n="Menu Akademik">Kinerja</div>
                         </a>
                         <ul class="menu-sub">
-                            <li class="menu-item @if (isset($menuPosts)) {{ $menuPosts }} @endif">
-                                <a href="{{ route('posts.index') }}" class="menu-link">
-                                    <div data-i18n="Account">Post Artikel</div>
+                            <li class="menu-item @if (isset($adminPenelitian)) {{ $adminPenelitian }} @endif">
+                                <a href="{{ route('adminPenelitian') }}" class="menu-link">
+                                    <div data-i18n="Account">Data Penelitian</div>
                                 </a>
                             </li>
-                            <li class="menu-item @if (isset($menuSejarah)) {{ $menuSejarah }} @endif">
-                                <a href="{{ route('sejarahpmim.index') }}" class="menu-link">
-                                    <div data-i18n="Notifications">Sejarah PMIM</div>
-                                </a>
-                            </li>
-                            <li class="menu-item  @if (isset($menuProduk)) {{ $menuProduk }} @endif">
-                                <a href="{{ route('produk.index') }}" class="menu-link">
-                                    <div data-i18n="Connections">Sarana & Prasarana</div>
-                                </a>
-                            </li>
-                            <li class="menu-item  @if (isset($menuAkreditas)) {{ $menuAkreditas }} @endif">
-                                <a href="{{ route('akreditas.index') }}" class="menu-link">
-                                    <div data-i18n="Connections">Akreditas</div>
-                                </a>
-                            </li>
-                            <li class="menu-item  @if (isset($menuVisimisi)) {{ $menuVisimisi }} @endif">
-                                <a href="{{ route('visimisi.index') }}" class="menu-link">
-                                    <div data-i18n="Connections">Visi Misi</div>
-                                </a>
-                            </li>
-                            <li class="menu-item  @if (isset($menuProfillulus)) {{ $menuProfillulus }} @endif">
-                                <a href="{{ route('profillulus.index') }}" class="menu-link">
-                                    <div data-i18n="Connections">Profil Lulusan</div>
-                                </a>
-                            </li>
-                            <li class="menu-item  @if (isset($menuKerjasama)) {{ $menuKerjasama }} @endif">
-                                <a href="{{ route('kerjasama.index') }}" class="menu-link">
-                                    <div data-i18n="Connections">Kerja Sama & Aliansi</div>
-                                </a>
-                            </li>
-                            <li class="menu-item  @if (isset($menuRencana)) {{ $menuRencana }} @endif">
-                                <a href="{{ route('rencanastrategi.index') }}" class="menu-link">
-                                    <div data-i18n="Connections">Rencana Strategi</div>
-                                </a>
-                            </li>
-                            <li class="menu-item  @if (isset($menuOrganis)) {{ $menuOrganis }} @endif">
-                                <a href="{{ route('organis.index') }}" class="menu-link">
-                                    <div data-i18n="Connections">Struktur Organisasi</div>
-                                </a>
-                            </li>
-                            <li class="menu-item  @if (isset($menuStaf)) {{ $menuStaf }} @endif">
-                                <a href="{{ route('staf.index') }}" class="menu-link">
-                                    <div data-i18n="Connections">Staf</div>
-                                </a>
-                            </li>
-                            <li class="menu-item  @if (isset($menuDosen)) {{ $menuDosen }} @endif">
-                                <a href="{{ route('daftardosen.index') }}" class="menu-link">
-                                    <div data-i18n="Connections">Dafatr Dosen</div>
-                                </a>
-                            </li>                            
-                        </ul>
-                    </li>
-                    <li class="menu-item open" style="">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                            <div data-i18n="Menu Akademik">Menu Akademik</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item @if (isset($menuSemester1)) {{ $menuSemester1 }} @endif">
-                                <a href="{{ route('semestersatu.index') }}" class="menu-link">
-                                    <div data-i18n="Account">Truktur Kurikulum</div>
-                                </a>
-                            </li>
-                            <li class="menu-item @if (isset($menuKelender)) {{ $menuKelender }} @endif">
-                                <a href="{{ route('kelender.index') }}" class="menu-link">
-                                    <div data-i18n="Account">Kelender Akademik</div>
-                                </a>
-                            </li>
-                            <li class="menu-item @if (isset($menuPanduan)) {{ $menuPanduan }} @endif">
-                                <a href="{{ route('panduanakademik.index') }}" class="menu-link">
-                                    <div data-i18n="Account">Panduan Akademik</div>
-                                </a>
-                            </li>
-                            <li class="menu-item @if (isset($menugaleriakademik)) {{ $menugaleriakademik }} @endif">
-                                <a href="{{ route('galeriakademik.index') }}" class="menu-link">
-                                    <div data-i18n="Account">Galeri Akademik</div>
-                                </a>
-                            </li>
-                            <li class="menu-item @if (isset($menuDownloadk)) {{ $menuDownloadk }} @endif">
-                                <a href="{{ route('downloadakademik.index') }}" class="menu-link">
-                                    <div data-i18n="Account">Download Akademik</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="menu-item open" style="">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                            <div data-i18n="Menu Akademik">Menu Download</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item @if (isset($menuAkreditasi)) {{ $menuAkreditasi }} @endif">
-                                <a href="{{ route('akreditasi.index') }}" class="menu-link">
-                                    <div data-i18n="Account">Akreditas</div>
-                                </a>
-                            </li>
-                            <li class="menu-item @if (isset($menuAdministrasi)) {{ $menuAdministrasi }} @endif">
-                                <a href="{{ route('administrasi.index') }}" class="menu-link">
-                                    <div data-i18n="Account">Data Administrasi</div>
-                                </a>
-                            </li>
-                            <li class="menu-item @if (isset($menuPenjaminanmutu)) {{ $menuPenjaminanmutu }} @endif">
-                                <a href="{{ route('penjaminanmutu.index') }}" class="menu-link">
-                                    <div data-i18n="Account">Data Penjaminan Mutu</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="menu-item open" style="">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                            <div data-i18n="Menu Akademik">Menu Prestasi MHS</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item @if (isset($menuPrestasi)) {{ $menuPrestasi }} @endif">
-                                <a href="{{ route('prestasisiswa.index') }}" class="menu-link">
-                                    <div data-i18n="Account">Prestasi MHS</div>
-                                </a>
-                            </li>
-                            <li class="menu-item @if (isset($menuTracer)) {{ $menuTracer }} @endif">
-                                <a href="{{ route('tracerstudy.index') }}" class="menu-link">
-                                    <div data-i18n="Account">Tracer Study</div>
+                            <li class="menu-item @if (isset($adminPengajaran)) {{ $adminPengajaran }} @endif">
+                                <a href="{{ route('adminPengajaran') }}" class="menu-link">
+                                    <div data-i18n="Account">Data Pengajaran</div>
                                 </a>
                             </li>                                                        
-                            <li class="menu-item  @if (isset($gorilembagaMenu)) {{ $gorilembagaMenu }} @endif">
-                                <a href="{{ route('publikasi-nasional.index') }}" class="menu-link">
-                                    <div data-i18n="Connections">Publikasi Nasional</div>
+                            <li class="menu-item  @if (isset($adminPengabdian)) {{ $adminPengabdian }} @endif">
+                                <a href="{{ route('adminPengabdian') }}" class="menu-link">
+                                    <div data-i18n="Connections">Data Pengabdian</div>
                                 </a>
                             </li>
-                            <li class="menu-item @if (isset($MenuInternasional)) {{ $MenuInternasional }} @endif">
-                                <a href="{{ route('publikasiinternasional.index') }}" class="menu-link">
-                                    <div data-i18n="Account">Publikasi Internasional</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    
-                    <li class="menu-item open" style="">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                            <div data-i18n="Menu Akademik">Data Pendaftaran</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item @if (isset($menuPrestasi)) {{ $menuPrestasi }} @endif">
-                                <a href="#" class="menu-link">
-                                    <div data-i18n="Account">Data Usulan Judul Tesis</div>
-                                </a>
-                            </li>
-                            <li class="menu-item @if (isset($menuTracer)) {{ $menuTracer }} @endif">
-                                <a href="" class="menu-link">
-                                    <div data-i18n="Account">Data Daftar Seminar Tesis</div>
-                                </a>
-                            </li>                                                        
-                            <li class="menu-item  @if (isset($gorilembagaMenu)) {{ $gorilembagaMenu }} @endif">
-                                <a href="" class="menu-link">
-                                    <div data-i18n="Connections">Data Daftar Sidang Tesis</div>
+                             <li class="menu-item  @if (isset($adminPenunjang)) {{ $adminPenunjang}} @endif">
+                                <a href="{{ route('adminPenunjang') }}" class="menu-link">
+                                    <div data-i18n="Connections">Data Penunjang Lainnya</div>
                                 </a>
                             </li>
                         </ul>
                     </li>
                     @endif
-                    {{-- @endcan --}}
-                    <li class="menu-header small text-uppercase">
-                        <span class="menu-header-text">Pages User</span>
-                    </li>
-                    {{-- <li class="menu-item @if (isset($datauser)) {{ $datauser }}@endif">
-                        <a href="{{route('data-user.index')}}" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-user-circle"></i>
-                            <div data-i18n="Account Settings">My Account</div>
+
+                   
+                   {{-- Cek apakah user adalah non-admin --}}
+                {{-- Cek apakah user adalah non-admin --}}
+                    @if (Auth::user()->is_admin == 0)
+                        <li class="menu-item  @if (isset($menudashbord)) {{ $menudashbord }} @endif">
+                        <a href="{{ route('dashboarduser') }}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                            <div data-i18n="Analytics">Dashboard</div>
                         </a>
-                    </li> --}}
-                    <li class="menu-item open" style="">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                            <div data-i18n="Menu Akademik">Pendaftaran</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item @if (isset($menuPrestasi)) {{ $menuPrestasi }} @endif">
-                                <a href="#" class="menu-link">
-                                    <div data-i18n="Account">Usulan Judul Tesis</div>
-                                </a>
-                            </li>
-                            <li class="menu-item @if (isset($menuTracer)) {{ $menuTracer }} @endif">
-                                <a href="#" class="menu-link">
-                                    <div data-i18n="Account">Daftar Seminar Tesis</div>
-                                </a>
-                            </li>                                                        
-                            
-                            <li class="menu-item @if (isset($MenuInternasional)) {{ $MenuInternasional }} @endif">
-                                <a href="#" class="menu-link">
-                                    <div data-i18n="Account">Daftar Sidang Tesis</div>
-                                </a>
-                            </li>
-                        </ul>
+                        </li>
+
+                       <li class="menu-item @if(isset($userPenelitian) || isset($userPengajaran) || isset($userPengabdian) || isset($userPenunjang)) open @endif">
+                            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                                <div data-i18n="Menu Akademik">Kinerja</div>
+                            </a>
+                            <ul class="menu-sub">
+                                <li class="menu-item @if (isset($userPenelitian)) {{ $userPenelitian }} @endif">
+                                    <a href="{{ route('userPenelitian') }}" class="menu-link">
+                                        <div data-i18n="Usulan Judul Tesis">Penelitian</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item @if (isset($userPengajaran)) {{ $userPengajaran }} @endif">
+                                    <a href="{{ route('userPengajaran') }}" class="menu-link">
+                                        <div data-i18n="Daftar Seminar Tesis">Pengajaran</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item @if (isset($userPengabdian)) {{ $userPengabdian }} @endif">
+                                    <a href="{{ route('userPengabdian') }}" class="menu-link">
+                                        <div data-i18n="Daftar Sidang Tesis">Pengabdian</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item @if (isset($userPenunjang)) {{ $userPenunjang }} @endif">
+                                    <a href="{{ route('userPenunjang') }}" class="menu-link">
+                                        <div data-i18n="Daftar Sidang Tesis">Penunjang Lainnya</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>     
+                    @endif
+
+        
+                    <li class="menu-item">
+                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="menu-link btn btn-link text-start p-0" style="border: none; background: none; width: 100%;">
+                                <i class="menu-icon tf-icons bx bx-log-out"></i>
+                                <div data-i18n="Logout">Logout</div>
+                            </button>
+                        </form>
                     </li>
+                   
+                    
                 </ul>
             </aside>
             <!-- / Menu -->
@@ -443,6 +304,9 @@
     <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
     <script src="/assets/vendor/js/menu.js"></script>
+    <!-- Bootstrap JS (di bawah sebelum </body>) -->
+
+
     <!-- endbuild -->
 
     <!-- Vendors JS -->

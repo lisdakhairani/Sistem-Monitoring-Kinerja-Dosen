@@ -78,10 +78,7 @@
 
     <div class="container mt-4">
         <div class="copyright">
-            &copy; Copyright <strong><span>PMIM</span></strong>. 2015 -
-            <script>
-                document.write(new Date().getFullYear());
-            </script>
+           
         </div>
         <div class="credits">
             Designed by <a href="https://ppimfe.unimal.ac.id/">PMIM</a>

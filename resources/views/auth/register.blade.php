@@ -56,7 +56,7 @@
                             <!-- Logo -->
                             <div class="app-brand justify-content-center">
                                 <a href="/" class="app-brand-link gap-2">
-                                    <img src="{{ asset('/img/unimal_ppim.png') }}" alt="" width="100">
+                                    <img src="{{ asset('img/unimal_ppim.png') }}" alt="" width="100">
                                 </a>
                             </div>
                             <!-- /Logo -->

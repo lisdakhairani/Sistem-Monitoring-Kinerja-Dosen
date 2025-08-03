@@ -10,10 +10,7 @@
                             <div class="card-body">
                                 <h5 class="card-title text-primary">Dashbord</h5>
                                 <p class="mb-4">
-                                    Welcome to Started Application
-                                </p>
-                                <a href="/" class="btn btn-sm btn-outline-primary">View
-                                    Badges</a>
+                                    Selamat Datang di Sistem Monitoring Kinerja Dosen
                             </div>
                         </div>
                         <div class="col-sm-5 text-center text-sm-left">

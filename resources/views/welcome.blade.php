@@ -10,8 +10,8 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="{{ asset('/img/logo-unimal.png') }}" rel="icon">
-    <link href="{{ asset('/img/logo-unimal.png') }}" rel="apple-touch-icon">
+    <link href="{{ asset('img/logo-unimal.png') }}" rel="icon">
+    <link href="{{ asset('img/logo-unimal.png') }}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

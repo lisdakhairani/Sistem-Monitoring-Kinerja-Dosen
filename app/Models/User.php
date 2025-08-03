@@ -55,4 +55,45 @@ class User extends Authenticatable
     {
         return $this->hasMany(Datadiri::class);
     }
+
+    public function usulanJudul()
+{
+    return $this->hasMany(UsulanJudul::class);
+}
+
+public function seminarProposal()
+{
+    return $this->hasMany(SeminarProposal::class);
+}
+
+public function sidangTesis()
+{
+    return $this->hasMany(SeminarProposal::class);
+}
+
+public function konfirmasi()
+{
+    return $this->hasOne(Konfirmasi::class);
+}
+
+public function penelitian()
+{
+    return $this->hasOne(Penelitian::class);
+}
+public function pengabdian()
+{
+    return $this->hasOne(Pengabdian::class);
+}
+
+public function pengajaran()
+{
+    return $this->hasOne(Pengajaran::class);
+}
+
+public function penunjang()
+{
+    return $this->hasOne(Penunjang::class);
+}
+// dst
+
 }

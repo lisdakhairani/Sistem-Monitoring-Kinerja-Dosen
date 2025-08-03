@@ -25,7 +25,7 @@
                                         <th>No</th>
                                         <th>Name</th>
                                         <th>Email</th>
-                                        <th>Is Admin</th>
+                                       
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -34,7 +34,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $row->name }}</td>
                                         <td>{{ $row->email }}</td>
-                                        <td>{{ $row->is_admin }}</td>
+
                                         <td>
                                             <div class="d-flex">
                                                 <a href="{{ route('users.edit', $row->id) }}">

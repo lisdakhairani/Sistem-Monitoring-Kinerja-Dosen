@@ -14,9 +14,16 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::where('is_admin', 0)->get();
         $menuUsers = 'active';
         return view('users.index_user', compact('menuUsers', 'users'));
+    }
+
+    public function admin()
+    {
+        $users = User::where('is_admin', '!=', 0)->get();
+        $menuAdmin = 'active';
+        return view('users.index_user', compact('menuAdmin', 'users'));
     }
 
     /**
