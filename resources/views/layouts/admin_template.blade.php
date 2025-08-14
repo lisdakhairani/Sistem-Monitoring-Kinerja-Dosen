@@ -7,13 +7,12 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>PMIM | @yield('title')</title>
+    <title>SMKD PMIM | @yield('title')</title>
 
     <meta name="description" content="" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('img/logo-unimal.png') }}" />
-
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,6 +23,39 @@
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="{{ asset('img/unimal_ppim.png') }}" />
 
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        /* CSS untuk z-index tinggi pada toast */
+        .swal2-container {
+            z-index: 99999 !important;
+        }
+
+        /* Pastikan konten utama memiliki z-index lebih rendah */
+        .main-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Untuk navbar/fixed elements yang perlu di bawah toast */
+        .navbar, .fixed-top {
+            z-index: 100 !important;
+        }
+
+        /* Modal backdrop harus di bawah toast */
+        .modal-backdrop {
+            z-index: 9999 !important;
+        }
+
+        /* Modal content harus di bawah toast tapi di atas backdrop */
+        .modal {
+            z-index: 10000 !important;
+        }
+    </style>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -50,6 +82,8 @@
 
     <!-- Helpers -->
     <script src="/assets/vendor/js/helpers.js"></script>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
@@ -86,97 +120,182 @@
                 <div class="menu-inner-shadow"></div>
 
                 <ul class="menu-inner py-1">
-                    
-                    @if (Auth::user()->is_admin == 2)
-                    <li class="menu-item  @if (isset($menudashbord)) {{ $menudashbord }} @endif">
-                        <a href="{{ route('dashboardadmin') }}" class="menu-link">
+
+                    @if (Auth::user()->is_admin == 1)
+                    <li class="menu-item mt-4 @if (isset($menuDashbordAdmin)) {{ $menuDashbordAdmin }} @endif">
+                        <a href="{{ route('dashboard.admin') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Analytics">Dashboard</div>
                         </a>
                     </li>
-                    <li class="menu-item open" style="">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <li class="menu-item  @if (isset($menuSemester)) {{ $menuSemester }} @endif">
+                        <a href="{{ route('semester.index') }}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-calendar"></i>
+                            <div data-i18n="Semester">Semester</div>
+                        </a>
+                    </li>
+                    <li class="menu-item @if (isset($menuMataKuliah)) {{ $menuMataKuliah }} @endif">
+                        <a href="{{ route('mata-kuliah.index') }}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-book-open"></i>
+                            <div data-i18n="Mata Kuliah">Mata Kuliah</div>
+                        </a>
+                    </li>
+                    <li class="menu-item @if (isset($menuJabatanAkademik)) {{ $menuJabatanAkademik }} @endif">
+                        <a href="{{ route('jabatan-akademik.index') }}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-certification"></i>
+                            <div data-i18n="Jabatan Akademik">Jabatan Akademik</div>
+                        </a>
+                    </li>
+                    <li class="menu-item @if (isset($menuPangkat)) {{ $menuPangkat }} @endif">
+                        <a href="{{ route('pangkat.index') }}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-medal"></i>
+                            <div data-i18n="Pangkat">Pangkat</div>
+                        </a>
+                    </li>
+                    <li class="menu-item @if (isset($menuKinerja)) {{ $menuKinerja }} @endif">
+                        <a href="{{ route('kinerja.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                            <div data-i18n="Menu Akademik">Kinerja</div>
+                            <div data-i18n="Kinerja Dosen">Kinerja Dosen</div>
+                        </a>
+                    </li>
+
+                    <li class="menu-item  @if (request()->routeIs('akun-dosen.index') || request()->routeIs('akun-admin.index'))
+                            open
+                        @endif
+                        " style="">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-user-circle"></i>
+                            <div data-i18n="Menu Akun">Akun</div>
                         </a>
                         <ul class="menu-sub">
-                            <li class="menu-item @if (isset($adminPenelitian)) {{ $adminPenelitian }} @endif">
-                                <a href="{{ route('adminPenelitian') }}" class="menu-link">
-                                    <div data-i18n="Account">Data Penelitian</div>
+                            <li class="menu-item @if (isset($menuAdmin)) {{ $menuAdmin }} @endif">
+                                <a href="{{ route('akun-admin.index') }}" class="menu-link">
+                                    <div data-i18n="Admin">Data Admin</div>
                                 </a>
                             </li>
-                            <li class="menu-item @if (isset($adminPengajaran)) {{ $adminPengajaran }} @endif">
-                                <a href="{{ route('adminPengajaran') }}" class="menu-link">
-                                    <div data-i18n="Account">Data Pengajaran</div>
-                                </a>
-                            </li>                                                        
-                            <li class="menu-item  @if (isset($adminPengabdian)) {{ $adminPengabdian }} @endif">
-                                <a href="{{ route('adminPengabdian') }}" class="menu-link">
-                                    <div data-i18n="Connections">Data Pengabdian</div>
-                                </a>
-                            </li>
-                             <li class="menu-item  @if (isset($adminPenunjang)) {{ $adminPenunjang}} @endif">
-                                <a href="{{ route('adminPenunjang') }}" class="menu-link">
-                                    <div data-i18n="Connections">Data Penunjang Lainnya</div>
+                            <li class="menu-item @if (isset($menuDosen)) {{ $menuDosen }} @endif">
+                                <a href="{{ route('akun-dosen.index') }}" class="menu-link">
+                                    <div data-i18n="Dosen">Data Dosen</div>
                                 </a>
                             </li>
                         </ul>
                     </li>
                     @endif
 
-                   
+
                    {{-- Cek apakah user adalah non-admin --}}
                 {{-- Cek apakah user adalah non-admin --}}
                     @if (Auth::user()->is_admin == 0)
-                        <li class="menu-item  @if (isset($menudashbord)) {{ $menudashbord }} @endif">
-                        <a href="{{ route('dashboarduser') }}" class="menu-link">
+                        <li class="menu-item mt-4  @if (isset($menuDashbordUser)) {{ $menuDashbordUser }} @endif">
+                        <a href="{{ route('dashboard.user') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Analytics">Dashboard</div>
                         </a>
                         </li>
 
-                       <li class="menu-item @if(isset($userPenelitian) || isset($userPengajaran) || isset($userPengabdian) || isset($userPenunjang)) open @endif">
+                       <li class="menu-item @if (
+                            request()->routeIs('data-kinerja.*') ||
+                            request()->routeIs('kinerja-penelitian.*') ||
+                            request()->routeIs('kinerja-pengabdian.*') ||
+                            request()->routeIs('kinerja-penunjang.*') ||
+                            request()->routeIs('kinerja-pengajaran.*')
+                        ) open @endif">
+
                             <a href="javascript:void(0);" class="menu-link menu-toggle">
                                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                                <div data-i18n="Menu Akademik">Kinerja</div>
+                                <div data-i18n="Kinerja">Kinerja</div>
                             </a>
                             <ul class="menu-sub">
-                                <li class="menu-item @if (isset($userPenelitian)) {{ $userPenelitian }} @endif">
-                                    <a href="{{ route('userPenelitian') }}" class="menu-link">
-                                        <div data-i18n="Usulan Judul Tesis">Penelitian</div>
+                                <li class="menu-item @if (isset($menuDataKinerja)) {{ $menuDataKinerja }} @endif">
+                                    <a href="{{ route('data-kinerja.index') }}" class="menu-link">
+                                        <div data-i18n="Form Kinerja (Awal)">Form Kinerja (Awal)</div>
                                     </a>
                                 </li>
-                                <li class="menu-item @if (isset($userPengajaran)) {{ $userPengajaran }} @endif">
-                                    <a href="{{ route('userPengajaran') }}" class="menu-link">
-                                        <div data-i18n="Daftar Seminar Tesis">Pengajaran</div>
+                                <li class="menu-item @if (isset($menuKinerjaPenelitian)) {{ $menuKinerjaPenelitian }} @endif">
+                                    <a href="{{ route('kinerja-penelitian.index') }}" class="menu-link">
+                                        <div data-i18n="Penelitian">Penelitian</div>
                                     </a>
                                 </li>
-                                <li class="menu-item @if (isset($userPengabdian)) {{ $userPengabdian }} @endif">
-                                    <a href="{{ route('userPengabdian') }}" class="menu-link">
-                                        <div data-i18n="Daftar Sidang Tesis">Pengabdian</div>
+                                <li class="menu-item @if (isset($menuKinerjaPengajaran)) {{ $menuKinerjaPengajaran }} @endif">
+                                    <a href="{{ route('kinerja-pengajaran.index') }}" class="menu-link">
+                                        <div data-i18n="Pengajaran">Pengajaran</div>
                                     </a>
                                 </li>
-                                <li class="menu-item @if (isset($userPenunjang)) {{ $userPenunjang }} @endif">
-                                    <a href="{{ route('userPenunjang') }}" class="menu-link">
-                                        <div data-i18n="Daftar Sidang Tesis">Penunjang Lainnya</div>
+                                <li class="menu-item @if (isset($menuKinerjaPengabdian)) {{ $menuKinerjaPengabdian }} @endif">
+                                    <a href="{{ route('kinerja-pengabdian.index') }}" class="menu-link">
+                                        <div data-i18n="Pengabdian">Pengabdian</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item @if (isset($menuKinerjaPenunjang)) {{ $menuKinerjaPenunjang }} @endif">
+                                    <a href="{{ route('kinerja-penunjang.index') }}" class="menu-link">
+                                        <div data-i18n="Penunjang Lainnya">Penunjang Lainnya</div>
                                     </a>
                                 </li>
                             </ul>
-                        </li>     
+                        </li>
+                        <li class="menu-item @if (isset($menuArsip)) {{ $menuArsip }} @endif">
+                            <a href="{{ route('arsip.index') }}" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-folder-open"></i>
+                                <div data-i18n="Arsip Kinerja">Arsip Kinerja</div>
+                            </a>
+                        </li>
                     @endif
 
-        
+
                     <li class="menu-item">
-                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-inline">
                             @csrf
-                            <button type="submit" class="menu-link btn btn-link text-start p-0" style="border: none; background: none; width: 100%;">
+                            <button type="button" class="menu-link btn btn-link text-start p-0" style="border: none; background: none; width: 100%;" onclick="confirmLogout()">
                                 <i class="menu-icon tf-icons bx bx-log-out"></i>
                                 <div data-i18n="Logout">Logout</div>
                             </button>
                         </form>
                     </li>
-                   
-                    
+
+                    <!-- Tambahkan script SweetAlert2 di bagian head atau sebelum penutup body -->
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                    <script>
+                        function confirmLogout() {
+                            Swal.fire({
+                                title: 'Konfirmasi',
+                                text: "Apakah Anda yakin ingin keluar dari sistem?",
+                                icon: 'question',
+                                showCancelButton: true,
+                                confirmButtonColor: '#008080', // Warna teal
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Ya, Keluar',
+                                cancelButtonText: 'Batal',
+                                background: 'rgba(255, 255, 255, 0.15)', // Transparan tipis
+                                color: '#fff', // Warna teks putih
+                                backdrop: `
+                                    rgba(0,0,0,0.4)
+                                    url("https://sweetalert2.github.io/images/nyan-cat.gif")
+                                    left top
+                                    no-repeat
+                                `,
+                                customClass: {
+                                    popup: 'swal-glass'
+                                }
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    document.getElementById('logout-form').submit();
+                                }
+                            });
+                        }
+                    </script>
+
+                    <style>
+                        /* Efek Glassmorphism */
+                        .swal-glass {
+                            backdrop-filter: blur(10px);
+                            -webkit-backdrop-filter: blur(10px);
+                            border-radius: 12px;
+                            border: 1px solid rgba(255, 255, 255, 0.3);
+                        }
+                    </style>
+
+
+
                 </ul>
             </aside>
             <!-- / Menu -->
@@ -184,7 +303,7 @@
             <!-- Layout container -->
             <div class="layout-page">
                 <!-- Navbar -->
-                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+               <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
                     id="layout-navbar">
                     <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
                         <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
@@ -193,9 +312,21 @@
                     </div>
 
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-                        {{--Jam dan tanggal--}}
-                        <p class="text-primary" id="jam"></p>
-                        <p class="fw-bold mt-5" id="tanggal"></p>
+                        {{--Semester, tahun, tanggal, dan jam--}}
+                        @php
+                            $semester = \App\Models\Semester::where('status', 1)->first();
+                        @endphp
+
+                        <div class="d-flex flex-column me-3">
+                            @if($semester)
+                                <p class="fw-bold text-success mb-0" style="font-size: 12pt;">{{ $semester->nama_semester }}  {{ $semester->tahun_ajaran }}</p>
+                            @endif
+                            <div class="d-flex align-items-center">
+                                <p class="fw-bold mb-0" id="tanggal"></p>
+                                <p class="text-primary mx-2 mb-0" id="jam"></p>
+                            </div>
+                        </div>
+
                         <script>
                             function updateClock() {
                                 var now = new Date();
@@ -242,7 +373,6 @@
                                 </strong>
                             </li>
 
-
                             <!-- User -->
                             @include('home.userNavbar')
                             <!--/ User -->
@@ -271,7 +401,7 @@
                         <div
                             class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
                             <div class="mb-2 mb-md-0">
-                                ppimfe 2015 -
+                                SMKD PPIM 2025 -
                                 <script>
                                     document.write(new Date().getFullYear());
                                 </script>
@@ -320,7 +450,38 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    @foreach(['success', 'error', 'info', 'warning'] as $type)
+    @if(session($type))
+        <script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: {{ $type == 'error' ? 5000 : ($type == 'warning' ? 4000 : 3000) }},
+                    timerProgressBar: true,
+                    customClass: {
+                        popup: 'high-zindex-toast'
+                    },
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        // Force higher z-index
+                        toast.style.zIndex = '999999';
+                    }
+                });
+
+                Toast.fire({
+                    icon: '{{ $type }}',
+                    title: '{{ session($type) }}',
+                    background: '{{ $type == 'error' ? '#fff6f6' : ($type == 'warning' ? '#fff9f0' : ($type == 'info' ? '#f0f9ff' : '#f8fff0')) }}',
+                    color: '#333'
+                });
+            </script>
+        @endif
+    @endforeach
 </body>
 
 </html>

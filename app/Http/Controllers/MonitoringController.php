@@ -4,12 +4,19 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Request;
-use App\Models\Penelitian;
-use App\Models\Pengabdian;
-use App\Models\Pengajaran;
-use App\Models\Penunjang;
+use App\Models\User;
+use App\Models\MataKuliah;
+use App\Models\JabatanAkademik;
+use App\Models\Pangkat;
+use App\Models\Semester;
+use App\Models\KinerjaDosen;
+use App\Models\KinerjaPenelitian;
+use App\Models\KinerjaPengabdian;
+use App\Models\KinerjaPengajaran;
+use App\Models\KinerjaPenunjang;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 
 class MonitoringController extends Controller
@@ -17,406 +24,228 @@ class MonitoringController extends Controller
     public function index()
     {
         $Bannerawal = 'active';
-        return view('auth.bagianawal', compact('Bannerawal'));
+        $dosenCount = User::where('is_admin', 0)->count();
+
+        return view('auth.bagianawal', compact('Bannerawal', 'dosenCount'));
     }
 
-     public function dashboard()
-    {
-        $menudashboard = 'active';
-        $userId = Auth::id();
+     public function dashboardUser()
+        {
+        $menuDashbordUser = 'active';
+        $user = Auth::user();
 
-        $jumlahPenelitian = Penelitian::where('user_id', $userId)->count();
-        $jumlahPengajaran = Pengajaran::where('user_id', $userId)->count();
-        $jumlahPengabdian = Pengabdian::where('user_id', $userId)->count();
-        $jumlahPenunjang = Penunjang::where('user_id', $userId)->count();
+        // Academic statistics
+        $matkulCount = MataKuliah::count();
+        $pangkatCount = Pangkat::count();
+        $jabatanCount = JabatanAkademik::count();
 
+        // Performance statistics (filtered by logged-in dosen)
+        $penelitianCount = KinerjaPenelitian::whereHas('kinerjaDosen', function ($query) use ($user) {
+            $query->where('id_dosen', $user->id);
+        })->count();
 
-        return view('dashboard-user', compact('menudashboard',
-        'jumlahPenelitian',
-        'jumlahPengajaran',
-        'jumlahPengabdian',
-        'jumlahPenunjang'));
+        $pengabdianCount = KinerjaPengabdian::whereHas('kinerjaDosen', function ($query) use ($user) {
+            $query->where('id_dosen', $user->id);
+        })->count();
+
+        $pengajaranCount = KinerjaPengajaran::whereHas('kinerjaDosen', function ($query) use ($user) {
+            $query->where('id_dosen', $user->id);
+        })->count();
+
+        $penunjangCount = KinerjaPenunjang::whereHas('kinerjaDosen', function ($query) use ($user) {
+            $query->where('id_dosen', $user->id);
+        })->count();
+
+        // Chart data
+        $kinerjaDosen = KinerjaDosen::with('dosen')
+            ->orderBy('total_skor', 'desc')
+            ->where('id_dosen', $user->id)
+            ->take(10)
+            ->get();
+
+        $chartLabels = $kinerjaDosen->pluck('dosen.name')->toArray();
+        $chartData = $kinerjaDosen->pluck('total_skor')->toArray();
+
+        // Radar chart data (average scores)
+        $radarData = [
+            round(KinerjaPengajaran::whereHas('kinerjaDosen', function($query) use ($user) {
+                        $query->where('id_dosen', $user->id);
+                    })->avg('skor') ?? 0, 2),
+            
+            round(KinerjaPenelitian::whereHas('kinerjaDosen', function($query) use ($user) {
+                        $query->where('id_dosen', $user->id);
+                    })->avg('skor') ?? 0, 2),
+            
+            round(KinerjaPengabdian::whereHas('kinerjaDosen', function($query) use ($user) {
+                        $query->where('id_dosen', $user->id);
+                    })->avg('skor') ?? 0, 2),
+            
+            round(KinerjaPenunjang::whereHas('kinerjaDosen', function($query) use ($user) {
+                        $query->where('id_dosen', $user->id);
+                    })->avg('skor') ?? 0, 2)
+        ];
+
+        // Filter options
+        $dosens = User::where('is_admin', 0)->where('id', $user->id)->get();
+        $semesters = Semester::all();
+
+        // Get distinct years from kinerja_dosen
+        $years = KinerjaDosen::selectRaw('YEAR(tanggal_pengisian) as year')
+            ->distinct()
+            ->orderBy('year', 'desc')
+            ->pluck('year');
+
+        return view('dashboard-user', compact(
+            'menuDashbordUser',
+            'matkulCount',
+            'pangkatCount',
+            'jabatanCount',
+            'penelitianCount',
+            'pengabdianCount',
+            'pengajaranCount',
+            'penunjangCount',
+            'chartLabels',
+            'chartData',
+            'radarData',
+            'dosens',
+            'semesters',
+            'years'
+        ));
     }
 
-
-    public function PenelitianUser()
+    public function dashboardAdmin()
     {
-        $userId = Auth::id(); // ambil ID user yang sedang login
+        $menuDashbordAdmin = 'active';
 
-        // hanya ambil data usulan milik user yang login
-        $penelitian = Penelitian::with('users')
-            ->where('user_id', $userId)
-            ->paginate(20);
+        // User statistics
+        $totalUsers = User::count();
+        $adminCount = User::where('is_admin', 1)->count();
+        $dosenCount = User::where('is_admin', 0)->count();
 
-        $PenelitianUser = 'active';
-        return view('kinerja.penelitian-user', compact('Penelitian.index', 'penelitian'));
+        // Academic statistics
+        $matkulCount = MataKuliah::count();
+        $pangkatCount = Pangkat::count();
+        $jabatanCount = JabatanAkademik::count();
+
+        // Performance statistics
+        $penelitianCount = KinerjaPenelitian::count();
+        $pengabdianCount = KinerjaPengabdian::count();
+        $pengajaranCount = KinerjaPengajaran::count();
+        $penunjangCount = KinerjaPenunjang::count();
+
+        // Chart data
+        $kinerjaDosen = KinerjaDosen::with('dosen')
+            ->orderBy('total_skor', 'desc')
+            ->take(10)
+            ->get();
+
+        $chartLabels = $kinerjaDosen->pluck('dosen.name')->toArray();
+        $chartData = $kinerjaDosen->pluck('total_skor')->toArray();
+
+        // Radar chart data (average scores)
+        $radarData = [
+            round(KinerjaPengajaran::avg('skor') ?? 0, 2),
+            round(KinerjaPenelitian::avg('skor') ?? 0, 2),
+            round(KinerjaPengabdian::avg('skor') ?? 0, 2),
+            round(KinerjaPenunjang::avg('skor') ?? 0, 2)
+        ];
+
+        // Filter options
+        $dosens = User::where('is_admin', 0)->get();
+        $semesters = Semester::all();
+
+        // Get distinct years from kinerja_dosen
+        $years = KinerjaDosen::selectRaw('YEAR(tanggal_pengisian) as year')
+            ->distinct()
+            ->orderBy('year', 'desc')
+            ->pluck('year');
+
+        return view('dahsboard-admins', compact(
+            'menuDashbordAdmin',
+            'totalUsers',
+            'adminCount',
+            'dosenCount',
+            'matkulCount',
+            'pangkatCount',
+            'jabatanCount',
+            'penelitianCount',
+            'pengabdianCount',
+            'pengajaranCount',
+            'penunjangCount',
+            'chartLabels',
+            'chartData',
+            'radarData',
+            'dosens',
+            'semesters',
+            'years'
+        ));
     }
 
-    public function storePenelitian(Request $request)
+    public function filterDashboardData(Request $request)
     {
-        $data = $request->validate([
-            'judul_penelitian' => 'required',
-            'jenis_penelitian' => 'required',
-            'peran' => 'required',
-            'sumber_dana' => 'required',
-            'jumlah_dana' => 'required|numeric',
-            'tahun_kegiatan' => 'required|digits:4',
-            'status' => 'required',
-            'output.*' => 'file|mimes:pdf,doc,docx|max:20048',
-            'file_bukti.*' => 'file|mimes:pdf,doc,docx|max:20048',
-        ]);
+        try {
+            $query = KinerjaDosen::with(['dosen', 'pengajaran', 'penelitian', 'pengabdian', 'penunjang']);
 
-        $data['user_id'] = auth()->id();
-
-        // Simpan file output
-        if ($request->hasFile('output')) {
-            $outputPaths = [];
-            foreach ($request->file('output') as $outputFile) {
-                $outputPaths[] = $outputFile->store('penelitian/output', 'public');
-            }
-            $data['output'] = json_encode($outputPaths); // Simpan sebagai JSON
-        }
-
-        // Simpan file bukti
-        if ($request->hasFile('file_bukti')) {
-            $buktiPaths = [];
-            foreach ($request->file('file_bukti') as $buktiFile) {
-                $buktiPaths[] = $buktiFile->store('penelitian/bukti', 'public');
-            }
-            $data['file_bukti'] = json_encode($buktiPaths); // Simpan sebagai JSON
-        }
-
-        Penelitian::create($data);
-
-        return redirect()->route('Penelitian.index')->with('success', 'Data berhasil ditambahkan');
-    }
-
-    public function updatePenelitian(Request $request, $id)
-    {
-        $data = $request->validate([
-            'judul_penelitian' => 'required',
-            'jenis_penelitian' => 'required',
-            'peran' => 'required',
-            'sumber_dana' => 'required',
-            'jumlah_dana' => 'required|numeric',
-            'tahun_kegiatan' => 'required|digits:4',
-            'status' => 'required',
-            'output.*' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
-            'file_bukti.*' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
-        ]);
-
-        $penelitian = Penelitian::findOrFail($id);
-
-        // Simpan file output baru jika ada
-        if ($request->hasFile('output')) {
-            $outputPaths = [];
-            foreach ($request->file('output') as $outputFile) {
-                $outputPaths[] = $outputFile->store('penelitian/output', 'public');
-            }
-            $data['output'] = json_encode($outputPaths);
-        }
-
-        // Simpan file bukti baru jika ada
-        if ($request->hasFile('file_bukti')) {
-            $buktiPaths = [];
-            foreach ($request->file('file_bukti') as $buktiFile) {
-                $buktiPaths[] = $buktiFile->store('penelitian/bukti', 'public');
-            }
-            $data['file_bukti'] = json_encode($buktiPaths);
-        }
-
-        $penelitian->update($data);
-
-        return redirect()->route('Penelitian.index')->with('success', 'Data berhasil diperbarui');
-    }
-
-
-    public function deletePenelitian($id)
-    {
-        $penelitian = Penelitian::findOrFail($id);
-        $penelitian->delete();
-
-        return redirect()->back()->with('success', 'Data berhasil dihapus');
-    }
-
-    public function userPengabdian()
-    {
-        $userId = Auth::id(); // ambil ID user yang sedang login
-
-        // hanya ambil data usulan milik user yang login
-        $pengabdian = Pengabdian::with('users')
-            ->where('user_id', $userId)
-            ->paginate(20);
-        $userPengabdian = 'active';
-        return view('kinerja.pengabdian-user', compact('userPengabdian','pengabdian'));
-    }
-
-    public function storePengabdian(Request $request)
-    {
-        $data = $request->validate([
-            'judul_kegiatan' => 'required',
-            'jenis_kegiatan' => 'required',
-            'peran' => 'required',
-            'lokasi' => 'required',
-            'tahun_kegiatan' => 'required|digits:4',
-            'sumber_dana' => 'required',
-            'jumlah_dana' => 'required|numeric',
-            'output.*' => 'file|mimes:pdf,doc,docx|max:20048',
-            'file_bukti.*' => 'file|mimes:pdf,doc,docx|max:20048',
-        ]);
-
-        $data['user_id'] = Auth::id();
-
-        if ($request->hasFile('output')) {
-            $outputPaths = [];
-            foreach ($request->file('output') as $file) {
-                $outputPaths[] = $file->store('pengabdian/output', 'public');
-            }
-            $data['output'] = json_encode($outputPaths);
-        }
-
-        if ($request->hasFile('file_bukti')) {
-            $buktiPaths = [];
-            foreach ($request->file('file_bukti') as $file) {
-                $buktiPaths[] = $file->store('pengabdian/bukti', 'public');
-            }
-            $data['file_bukti'] = json_encode($buktiPaths);
-        }
-
-        Pengabdian::create($data);
-
-        return redirect()->back()->with('success', 'Data berhasil ditambahkan.');
-    }
-
-    public function updatePengabdian(Request $request, $id)
-    {
-        $pengabdian = Pengabdian::findOrFail($id);
-
-        $data = $request->validate([
-            'judul_kegiatan' => 'required',
-            'jenis_kegiatan' => 'required',
-            'peran' => 'required',
-            'lokasi' => 'required',
-            'tahun_kegiatan' => 'required|digits:4',
-            'sumber_dana' => 'required',
-            'jumlah_dana' => 'required|numeric',
-            'output.*' => 'file|mimes:pdf,doc,docx|max:20048',
-            'file_bukti.*' => 'file|mimes:pdf,doc,docx|max:20048',
-        ]);
-
-        // Hapus file output lama jika ada file baru
-        if ($request->hasFile('output')) {
-            // Hapus file lama dari storage
-            foreach (json_decode($pengabdian->output ?? '[]') as $oldFile) {
-                Storage::disk('public')->delete($oldFile);
+            // Apply filters
+            if ($request->has('dosen_id') && $request->dosen_id != '') {
+                $query->where('id_dosen', $request->dosen_id);
             }
 
-            // Simpan file baru
-            $outputPaths = [];
-            foreach ($request->file('output') as $file) {
-                $outputPaths[] = $file->store('pengabdian/output', 'public');
-            }
-            $data['output'] = json_encode($outputPaths);
-        }
-
-        // Hapus file bukti lama jika ada file baru
-        if ($request->hasFile('file_bukti')) {
-            foreach (json_decode($pengabdian->file_bukti ?? '[]') as $oldFile) {
-                Storage::disk('public')->delete($oldFile);
+            if ($request->has('semester_id') && $request->semester_id != '') {
+                $query->where('id_semester', $request->semester_id);
             }
 
-            $buktiPaths = [];
-            foreach ($request->file('file_bukti') as $file) {
-                $buktiPaths[] = $file->store('pengabdian/bukti', 'public');
+            if ($request->has('tahun') && $request->tahun != '') {
+                $query->whereYear('tanggal_pengisian', $request->tahun);
             }
-            $data['file_bukti'] = json_encode($buktiPaths);
-        }
 
-        $pengabdian->update($data);
+            // Get filtered data
+            $kinerjaData = $query->orderBy('total_skor', 'desc')->get();
 
-        return redirect()->back()->with('success', 'Data berhasil diperbarui.');
-    }
+            // Prepare chart data
+            $chartLabels = [];
+            $chartData = [];
 
-
-    public function deletePengabdian($id)
-    {
-        Pengabdian::findOrFail($id)->delete();
-        return redirect()->back()->with('success', 'Data berhasil dihapus.');
-    }
-
-    public function userPengajaran()
-    {
-        $userId = Auth::id(); // ambil ID user yang sedang login
-
-        // hanya ambil data usulan milik user yang login
-        $pengajaran = Pengajaran::with('users')
-            ->where('user_id', $userId)
-            ->paginate(20);
-        $userPengajaran = 'active';
-        return view('kinerja.pengajaran-user', compact('userPengajaran', 'pengajaran'));
-    }
-
-    public function storePengajaran(Request $request)
-    {
-        $request->validate([
-            'nama_mata_kuliah' => 'required',
-            'kode_mata_kuliah' => 'required',
-            'jumlah_sks' => 'required|integer',
-            'semester' => 'required',
-            'tahun_ajaran' => 'required',
-            'jumlah_pertemuan' => 'required|integer',
-            'file_bukti.*' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
-        ]);
-
-        $pengajaran = new Pengajaran();
-        $pengajaran->user_id = auth()->id();
-        $pengajaran->nama_mata_kuliah = $request->nama_mata_kuliah;
-        $pengajaran->kode_mata_kuliah = $request->kode_mata_kuliah;
-        $pengajaran->jumlah_sks = $request->jumlah_sks;
-        $pengajaran->semester = $request->semester;
-        $pengajaran->tahun_ajaran = $request->tahun_ajaran;
-        $pengajaran->jumlah_pertemuan = $request->jumlah_pertemuan;
-
-        if ($request->hasFile('file_bukti')) {
-            $paths = [];
-            foreach ($request->file('file_bukti') as $file) {
-                $paths[] = $file->store('pengajaran/bukti', 'public');
-            }
-            $pengajaran->file_bukti = json_encode($paths);
-        }
-
-        $pengajaran->save();
-
-        return redirect()->back()->with('success', 'Data pengajaran berhasil ditambahkan.');
-    }
-
-    public function updatePengajaran(Request $request, $id)
-    {
-        $request->validate([
-            'nama_mata_kuliah' => 'required',
-            'kode_mata_kuliah' => 'required',
-            'jumlah_sks' => 'required|integer',
-            'semester' => 'required',
-            'tahun_ajaran' => 'required',
-            'jumlah_pertemuan' => 'required|integer',
-            'file_bukti.*' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
-        ]);
-
-        $pengajaran = Pengajaran::findOrFail($id);
-        $pengajaran->nama_mata_kuliah = $request->nama_mata_kuliah;
-        $pengajaran->kode_mata_kuliah = $request->kode_mata_kuliah;
-        $pengajaran->jumlah_sks = $request->jumlah_sks;
-        $pengajaran->semester = $request->semester;
-        $pengajaran->tahun_ajaran = $request->tahun_ajaran;
-        $pengajaran->jumlah_pertemuan = $request->jumlah_pertemuan;
-
-        if ($request->hasFile('file_bukti')) {
-            $paths = [];
-            foreach ($request->file('file_bukti') as $file) {
-                $paths[] = $file->store('pengajaran/bukti', 'public');
-            }
-            $pengajaran->file_bukti = json_encode($paths);
-        }
-
-        $pengajaran->save();
-
-        return redirect()->back()->with('success', 'Data pengajaran berhasil diperbarui.');
-    }
-
-    public function deletePengajaran($id)
-    {
-        $pengajaran = Pengajaran::findOrFail($id);
-
-        // Hapus file dari storage jika ada
-        if ($pengajaran->file_bukti) {
-            $files = json_decode($pengajaran->file_bukti, true);
-            foreach ($files as $file) {
-                if (Storage::disk('public')->exists($file)) {
-                    Storage::disk('public')->delete($file);
+            foreach ($kinerjaData as $kinerja) {
+                if ($kinerja->dosen) { // Only include if dosen exists
+                    $chartLabels[] = $kinerja->dosen->name;
+                    $chartData[] = $kinerja->total_skor;
                 }
             }
+
+            // Calculate radar data
+            $pengajaran = $kinerjaData->flatMap(function($item) {
+                return $item->pengajaran;
+            });
+            $penelitian = $kinerjaData->flatMap(function($item) {
+                return $item->penelitian;
+            });
+            $pengabdian = $kinerjaData->flatMap(function($item) {
+                return $item->pengabdian;
+            });
+            $penunjang = $kinerjaData->flatMap(function($item) {
+                return $item->penunjang;
+            });
+
+            $radarData = [
+                $pengajaran->isNotEmpty() ? round($pengajaran->avg('skor'), 2) : 0,
+                $penelitian->isNotEmpty() ? round($penelitian->avg('skor'), 2) : 0,
+                $pengabdian->isNotEmpty() ? round($pengabdian->avg('skor'), 2) : 0,
+                $penunjang->isNotEmpty() ? round($penunjang->avg('skor'), 2) : 0
+            ];
+
+            return response()->json([
+                'chartLabels' => $chartLabels,
+                'chartData' => $chartData,
+                'radarData' => $radarData,
+                'status' => 'success'
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
         }
-
-        $pengajaran->delete();
-
-        return redirect()->back()->with('success', 'Data pengajaran berhasil dihapus.');
-    }
-
-
-    public function userPenunjang()
-    {
-        $userId = Auth::id(); // ambil ID user yang sedang login
-
-        // hanya ambil data usulan milik user yang login
-        $penunjang = Penunjang::with('users')
-            ->where('user_id', $userId)
-            ->paginate(20);
-        $userPenunjang = 'active';
-        return view('kinerja.penunjang-user', compact('userPenunjang','penunjang'));
-    }
-
-    public function storePenunjang(Request $request)
-    {
-        $data = $request->validate([
-            'jenis_kegiatan' => 'required',
-            'nama_kegiatan' => 'required',
-            'tingkat_kegiatan' => 'required',
-            'tanggal_kegiatan' => 'required|date',
-            'institusi_penyelenggara' => 'required',
-            'file_bukti.*' => 'file|mimes:pdf,doc,docx|max:20480',
-        ]);
-
-        $data['user_id'] = auth()->id();
-
-        if ($request->hasFile('file_bukti')) {
-            $paths = [];
-            foreach ($request->file('file_bukti') as $file) {
-                $paths[] = $file->store('penunjang/file_bukti', 'public');
-            }
-            $data['file_bukti'] = json_encode($paths);
-        }
-
-        Penunjang::create($data);
-        return redirect()->back()->with('success', 'Data berhasil ditambahkan.');
-    }
-
-    public function updatePenunjang(Request $request, $id)
-    {
-        $penunjang = Penunjang::findOrFail($id);
-
-        $data = $request->validate([
-            'jenis_kegiatan' => 'required',
-            'nama_kegiatan' => 'required',
-            'tingkat_kegiatan' => 'required',
-            'tanggal_kegiatan' => 'required|date',
-            'institusi_penyelenggara' => 'required',
-            'file_bukti.*' => 'file|mimes:pdf,doc,docx|max:20480',
-        ]);
-
-        if ($request->hasFile('file_bukti')) {
-            // Hapus file lama
-            foreach (json_decode($penunjang->file_bukti ?? '[]') as $file) {
-                Storage::disk('public')->delete($file);
-            }
-
-            $paths = [];
-            foreach ($request->file('file_bukti') as $file) {
-                $paths[] = $file->store('penunjang/file_bukti', 'public');
-            }
-            $data['file_bukti'] = json_encode($paths);
-        }
-
-        $penunjang->update($data);
-        return redirect()->back()->with('success', 'Data berhasil diperbarui.');
-    }
-
-    public function deletePenunjang($id)
-    {
-        $penunjang = Penunjang::findOrFail($id);
-        foreach (json_decode($penunjang->file_bukti ?? '[]') as $file) {
-            Storage::disk('public')->delete($file);
-        }
-        $penunjang->delete();
-        return redirect()->back()->with('success', 'Data berhasil dihapus.');
     }
 }

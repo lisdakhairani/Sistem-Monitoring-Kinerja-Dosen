@@ -29,7 +29,16 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        $user = Auth::user();
+
+        if ($user->is_admin == 0) {
+            return redirect()->route('dashboard.user')->with('success', "Berhasil masuk ke sistem.");
+        } elseif ($user->is_admin == 1) {
+            return redirect()->route('dashboard.admin')->with('success', "Berhasil masuk ke sistem.");
+        } else {
+            Auth::logout(); // Logout user jika tidak memenuhi kondisi
+            return redirect()->route('login')->with('error', 'Akun tidak memiliki akses role.');
+        }
     }
 
     /**

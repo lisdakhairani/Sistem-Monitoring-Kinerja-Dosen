@@ -5,7 +5,19 @@
 // User
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DatadiriUserController as UserDatadiriUserController;
+use App\Http\Controllers\SemesterController;
+use App\Http\Controllers\MataKuliahController;
+use App\Http\Controllers\JabatanAkademikController;
+use App\Http\Controllers\PangkatController;
+use App\Http\Controllers\ArsipController;
+use App\Http\Controllers\KinerjaController;
+use App\Http\Controllers\DataKinerjaController;
+use App\Http\Controllers\KinerjaPenelitianController;
+use App\Http\Controllers\KinerjaPengabdianController;
+use App\Http\Controllers\KinerjaPenunjangController;
+use App\Http\Controllers\KinerjaPengajaranController;
+use App\Http\Controllers\AkunDosenController;
+use App\Http\Controllers\AkunAdminController;
 use App\Http\Controllers\MonitoringController;
 use App\Http\Controllers\AdminMonitoringController;
 use App\Http\Controllers\PenelitianUserController;
@@ -30,52 +42,16 @@ Route::get('/', [MonitoringController::class, 'index'])->name('bagianawal');
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard-admin', [AdminMonitoringController::class, 'dashboard'])->name('dashboardadmin');
-    Route::get('/penelitian-admin', [AdminMonitoringController::class, 'adminPenelitian'])->name('adminPenelitian');
-    Route::post('/penelitian/nilai/{id}', [AdminMonitoringController::class, 'nilaiPenelitian'])->name('Penelitian.nilai');
-
-    Route::get('/pengabdian-admin', [AdminMonitoringController::class, 'adminPengabdian'])->name('adminPengabdian');
-    Route::post('/pengabdian/nilai/{id}', [AdminMonitoringController::class, 'nilaiPengabdian'])->name('Pengabdian.nilai');
-
-    Route::get('/pengajaran-admin', [AdminMonitoringController::class, 'adminPengajaran'])->name('adminPengajaran');
-    Route::post('/pengajaran/nilai/{id}', [AdminMonitoringController::class, 'nilaiPengajaran'])->name('Pengajaran.nilai');
-
-    Route::get('/penunjang-admin', [AdminMonitoringController::class, 'adminPenunjang'])->name('adminPenunjang');
-    Route::post('/penunjang/nilai/{id}', [AdminMonitoringController::class, 'nilaiPenunjang'])->name('Penunjang.nilai');
-
-    Route::get('/data-user', [AdminMonitoringController::class, 'index'])->name('users');
+    Route::get('/admins/dashboard', [MonitoringController::class, 'dashboardAdmin'])->name('dashboard.admin');
+    Route::get('/admin/dashboard/filter', [MonitoringController::class, 'filterDashboardData'])->name('admin.dashboard.filter');
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard-user', [MonitoringController::class, 'dashboard'])->name('dashboarduser');
-    Route::get('/penelitian-user', [MonitoringController::class, 'userPenelitian'])->name('userPenelitian');
-    Route::post('/penelitian/store', [MonitoringController::class, 'storePenelitian'])->name('Penelitian.store');
-    Route::put('/penelitian/update/{id}', [MonitoringController::class, 'updatePenelitian'])->name('Penelitian.update');
-    Route::delete('/penelitian/delete/{id}', [MonitoringController::class, 'deletePenelitian'])->name('Penelitian.delete');
-
-    Route::get('/pengabdian-user', [MonitoringController::class, 'userPengabdian'])->name('userPengabdian');
-    Route::post('/pengabdian/store', [MonitoringController::class, 'storePengabdian'])->name('Pengabdian.store');
-    Route::put('/pengabdian/update/{id}', [MonitoringController::class, 'updatePengabdian'])->name('Pengabdian.update');
-    Route::delete('/delete/{id}', [MonitoringController::class, 'deletePengabdian'])->name('Pengabdian.delete');
-
-    Route::get('/pengajaran-user', [MonitoringController::class, 'userPengajaran'])->name('userPengajaran');
-    Route::post('/pengajaran/store', [MonitoringController::class, 'storePengajaran'])->name('Pengajaran.store');
-    Route::put('/pengajaran/update/{id}', [MonitoringController::class, 'updatePengajaran'])->name('Pengajaran.update');
-    Route::delete('/pengajaran/delete/{id}', [MonitoringController::class, 'deletePengajaran'])->name('Pengajaran.delete');
-
-    Route::get('/penunjang-user', [MonitoringController::class, 'userPenunjang'])->name('userPenunjang');
-    Route::post('/penunjang/store', [MonitoringController::class, 'storePenunjang'])->name('Penunjang.store');
-    Route::put('/penunjang/update/{id}', [MonitoringController::class, 'updatePenunjang'])->name('Penunjang.update');
-    Route::delete('/penunjang/delete/{id}', [MonitoringController::class, 'deletePenunjang'])->name('Penunjang.delete');
+    Route::get('/users/dashboard', [MonitoringController::class, 'dashboardUser'])->name('dashboard.user');
 
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/penelitian-user', [PenelitianUserController::class, 'index'])->name('Penelitian.index');
-    Route::post('/penelitian-user/store', [PenelitianUserController::class, 'store'])->name('Penelitian.store');
-    Route::put('/penelitian-user/update/{id}', [PenelitianUserController::class, 'update'])->name('Penelitian.update');
-    Route::delete('/penelitian-user/delete/{id}', [PenelitianUserController::class, 'destroy'])->name('Penelitian.delete');
-});
+
 
 
 
@@ -95,19 +71,57 @@ Route::middleware('auth', )->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth',])->group(function () {
-    Route::resource('data-user', UserDatadiriUserController::class);
-});
+// Route Admin
 Route::middleware(['auth'])->group(function () {
-    Route::get('/penelitian/user', [PenelitianUserController::class, 'index'])->name('userPenelitian');
+    Route::prefix('admin')->group(function () {
+        Route::resource('semester', SemesterController::class)
+            ->only(['index', 'store', 'update', 'destroy']);
+        Route::resource('mata-kuliah', MataKuliahController::class)
+            ->only(['index', 'store', 'update', 'destroy']);
+        Route::resource('jabatan-akademik', JabatanAkademikController::class)
+            ->only(['index', 'store', 'update', 'destroy']);
+        Route::resource('pangkat', PangkatController::class)
+            ->only(['index', 'store', 'update', 'destroy']);
+        Route::resource('kinerja', KinerjaController::class)
+            ->only(['index', 'update', 'show', 'edit']);
+        Route::post('/kinerja/update-score/{kinerja}', [KinerjaController::class, 'updateScore'])->name('kinerja.updateScore');
+        Route::get('/kinerja/{kinerja}/export-excel', [KinerjaController::class, 'exportExcel'])->name('kinerja.export.excel');
+        Route::get('/kinerja/{kinerja}/export-pdf', [KinerjaController::class, 'exportPdf'])->name('kinerja.export.pdf');
+        // Add these new routes for filtered exports
+        Route::get('/kinerja/export/filtered-excel', [KinerjaController::class, 'exportFilteredExcel'])->name('kinerja.export.filtered.excel');
+        Route::get('/kinerja/export/filtered-pdf', [KinerjaController::class, 'exportFilteredPdf'])->name('kinerja.export.filtered.pdf');
+        Route::resource('akun-admin', AkunAdminController::class)
+            ->only(['index', 'store', 'update', 'destroy']);
+        Route::resource('akun-dosen', AkunDosenController::class)
+            ->only(['index', 'store', 'update', 'destroy']);
+    });
 });
-Route::get('/pengajaran', [PengajaranController::class, 'index'])->name('Pengajaran.index');
-Route::post('/pengajaran/store', [PengajaranController::class, 'store'])->name('Pengajaran.store');
-Route::put('/pengajaran/update/{id}', [PengajaranController::class, 'update'])->name('Pengajaran.update');
-Route::delete('/pengajaran/delete/{id}', [PengajaranController::class, 'destroy'])->name('Pengajaran.delete');
+
+// Route Users/Dosen
+Route::middleware(['auth'])->group(function () {
+    Route::prefix('users')->group(function () {
+        Route::resource('data-kinerja', DataKinerjaController::class)
+            ->only(['index', 'store', 'update', 'destroy']);
+        Route::put('/data-kinerja/update-stored/{id}', [DataKinerjaController::class, 'updateStored'])->name('data-kinerja.updateStored');
+        Route::resource('kinerja-penelitian', KinerjaPenelitianController::class)
+            ->only(['index', 'store', 'update', 'show', 'destroy']);
+        Route::resource('kinerja-pengajaran', KinerjaPengajaranController::class)
+            ->only(['index', 'store', 'update', 'show', 'destroy']);
+        Route::resource('kinerja-pengabdian', KinerjaPengabdianController::class)
+            ->only(['index', 'store', 'update', 'show', 'destroy']);
+        Route::resource('kinerja-penunjang', KinerjaPenunjangController::class)
+            ->only(['index', 'store', 'update', 'show', 'destroy']);
+        Route::resource('arsip', ArsipController::class)
+            ->only(['index', 'update', 'show']);
+        Route::post('/arsip/update-score/{arsip}', [ArsipController::class, 'updateScore'])->name('arsip.updateScore');
+        Route::get('/arsip/{arsip}/export-excel', [ArsipController::class, 'exportExcel'])->name('arsip.export.excel');
+        Route::get('/arsip/{arsip}/export-pdf', [ArsipController::class, 'exportPdf'])->name('arsip.export.pdf');
+    });
+});
 
 
-// not found
+
+// Route Page not found
 Route::fallback(function () {
     return response()->view('home.notfound');
 });

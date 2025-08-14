@@ -11,6 +11,39 @@
         <title>Login</title>
 
         <meta name="description" content="" />
+         <!-- SweetAlert2 CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+        <!-- SweetAlert2 JS -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <style>
+            /* CSS untuk z-index tinggi pada toast */
+            .swal2-container {
+                z-index: 99999 !important;
+            }
+
+            /* Pastikan konten utama memiliki z-index lebih rendah */
+            .main-content {
+                position: relative;
+                z-index: 1;
+            }
+
+            /* Untuk navbar/fixed elements yang perlu di bawah toast */
+            .navbar, .fixed-top {
+                z-index: 100 !important;
+            }
+
+            /* Modal backdrop harus di bawah toast */
+            .modal-backdrop {
+                z-index: 9999 !important;
+            }
+
+            /* Modal content harus di bawah toast tapi di atas backdrop */
+            .modal {
+                z-index: 10000 !important;
+            }
+        </style>
 
         <!-- Favicon -->
         <link rel="icon" type="image/x-icon" href="/img/logo-unimal.png" />
@@ -138,6 +171,37 @@
 
 <!-- Main JS -->
 <script src="../assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @foreach(['success', 'error', 'info', 'warning'] as $type)
+    @if(session($type))
+        <script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: {{ $type == 'error' ? 5000 : ($type == 'warning' ? 4000 : 3000) }},
+                    timerProgressBar: true,
+                    customClass: {
+                        popup: 'high-zindex-toast'
+                    },
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        // Force higher z-index
+                        toast.style.zIndex = '999999';
+                    }
+                });
+
+                Toast.fire({
+                    icon: '{{ $type }}',
+                    title: '{{ session($type) }}',
+                    background: '{{ $type == 'error' ? '#fff6f6' : ($type == 'warning' ? '#fff9f0' : ($type == 'info' ? '#f0f9ff' : '#f8fff0')) }}',
+                    color: '#333'
+                });
+            </script>
+        @endif
+    @endforeach
 
 <!-- Page JS -->
 
